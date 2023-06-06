@@ -10,7 +10,11 @@ export default function Sidebar({ children }) {
   ]);
 
   const sidebarRef = useRef(null);
-  useClickOutside(sidebarRef, () => {
+  useClickOutside(sidebarRef, (event) => {
+    if (event.target.closest("#close-sidebar-button")) {
+      return;
+    }
+
     isOpen && setIsOpen(false);
   });
 
