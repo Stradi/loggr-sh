@@ -8,7 +8,7 @@ export default function AppLayout({ auth, children }) {
       <Sidebar>
         <SidebarContent />
       </Sidebar>
-      <main className="overflow-y-auto">
+      <main className="overflow-y-auto w-full">
         <NavigationBar />
         <main className="p-4">{children}</main>
       </main>
