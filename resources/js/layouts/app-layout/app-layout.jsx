@@ -10,7 +10,7 @@ export default function AppLayout({ auth, children }) {
       </Sidebar>
       <main className="overflow-y-auto w-full">
         <NavigationBar />
-        <main className="p-4">{children}</main>
+        <main>{children}</main>
       </main>
     </section>
   );
