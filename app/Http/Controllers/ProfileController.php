@@ -14,6 +14,13 @@ use Image;
 
 class ProfileController extends Controller
 {
+  /**
+   * Uploads a file to S3 and returns the URL.
+   * @param  \Illuminate\Http\UploadedFile  $file The file to upload.
+   * @param  string  $path The path to upload the file to.
+   * @param  array<int, int>  $dimensions The dimensions to resize the image to.
+   * @return string The URL of the uploaded file.
+   */
   private function _upload_file_to_s3($file, $path, $dimensions)
   {
     $uuid = Str::orderedUuid();
@@ -29,6 +36,12 @@ class ProfileController extends Controller
     return Env::get('AWS_URL') . '/' . $path . '/' . $full_filename;
   }
 
+  /**
+   * Show a user's profile by their handle.
+   * @param  \Illuminate\Http\Request  $request The request object.
+   * @param  string  $handle The user's handle. This is the @username.
+   * @return \Inertia\Response
+   */
   public function show(Request $request, string $handle)
   {
     $user = User::where('handle', $handle)->firstOrFail();
@@ -38,6 +51,11 @@ class ProfileController extends Controller
     ]);
   }
 
+  /**
+   * Update a user's profile. This is the POST route.
+   * @param  \Illuminate\Http\Request  $request The request object.
+   * @return \Illuminate\Http\RedirectResponse
+   */
   public function update(Request $request)
   {
     $user = $request->user();
