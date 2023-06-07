@@ -18,6 +18,7 @@ export default function EditProfileDialog({
     name: defaultValues.name,
     bio: defaultValues.bio,
     avatar: undefined,
+    cover_image: undefined,
     handle: defaultValues.handle,
   });
 
@@ -51,6 +52,17 @@ export default function EditProfileDialog({
       >
         <input type="hidden" name="_method" value="PUT" />
         <input type="hidden" name="handle" value="batin" />
+        <div>
+          <Label htmlFor="cover_image">Cover Image</Label>
+          <Input
+            id="cover_image"
+            type="file"
+            files={data.cover_image}
+            onChange={(e) => setData("cover_image", e.target.files[0])}
+            disabled={processing}
+          />
+          {errors.cover_image && <InputError>{errors.cover_image}</InputError>}
+        </div>
         <div>
           <Label htmlFor="avatar">Avatar</Label>
           <Input

@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->string('bio')->nullable();
             $table->string('avatar')->nullable();
+            $table->string('cover_image')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

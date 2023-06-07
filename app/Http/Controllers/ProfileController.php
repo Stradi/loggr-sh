@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Env;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
@@ -47,10 +46,25 @@ class ProfileController extends Controller
 
       $image = Image::make($file);
       $image->fit(200, 200);
-
       $resource = $image->stream()->detach();
+
       Storage::disk('s3')->put('avatars/' . $full_filename, $resource);
       $user->avatar = Env::get('AWS_URL') . '/avatars/' . $full_filename;
+    }
+
+    if ($request->hasFile('cover_image')) {
+      $file = $request->file('cover_image');
+
+      $uuid = Str::orderedUuid();
+      $extension = $file->getClientOriginalExtension();
+      $full_filename = $uuid . '.' . $extension;
+
+      $image = Image::make($file);
+      $image->fit(768, 256);
+      $resource = $image->stream()->detach();
+
+      Storage::disk('s3')->put('cover_images/' . $full_filename, $resource);
+      $user->cover_image = Env::get('AWS_URL') . '/cover_images/' . $full_filename;
     }
 
     $user->save();

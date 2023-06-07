@@ -9,13 +9,13 @@ export default function Page({ auth, user }) {
         <header>
           <div className="relative">
             <img
-              src="https://picsum.photos/1024/512"
+              src={user.cover_image ?? "https://picsum.photos/768/256"}
               alt="Cover"
               className="h-32 md:h-64 w-full object-cover"
             />
             <img
               //------------------------v Make this a placeholder image
-              src={`${user.avatar}` || "https://picsum.photos/512"}
+              src={user.avatar ?? "https://picsum.photos/512"}
               alt="Avatar"
               className="w-24 md:w-40 aspect-square absolute -bottom-14 rounded-full border-2 border-white left-2 md:left-4"
             />
