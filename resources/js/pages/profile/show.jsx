@@ -21,12 +21,12 @@ export default function Page({ auth, user }) {
             />
           </div>
           <div className="ml-28 md:ml-44 flex justify-between mt-1 mr-1">
-            <div className="[&>*]:leading-tight">
+            <div className="[&>*]:leading-tight min-w-0">
               {" "}
-              <h1 className="text-lg md:text-2xl font-medium">
+              <h1 className="truncate text-lg md:text-2xl font-medium">
                 {user.name || "John Doe"}
               </h1>
-              <p className="text-sm md:text-base text-neutral-600 font-medium">
+              <p className="truncate text-sm md:text-base text-neutral-600 font-medium">
                 @{user.handle}
               </p>
             </div>
