@@ -1,5 +1,6 @@
 import Button from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
+import EditProfileDialog from "./edit-profile-dialog";
 
 export default function Page({ auth, user }) {
   return (
@@ -13,7 +14,8 @@ export default function Page({ auth, user }) {
               className="h-32 md:h-64 w-full object-cover"
             />
             <img
-              src="https://picsum.photos/1024/1024"
+              //------------------------v Make this a placeholder image
+              src={`${user.avatar}` || "https://picsum.photos/512"}
               alt="Avatar"
               className="w-24 md:w-40 aspect-square absolute -bottom-14 rounded-full border-2 border-white left-2 md:left-4"
             />
@@ -30,7 +32,13 @@ export default function Page({ auth, user }) {
             </div>
             <div className="flex gap-1">
               {auth.user && user.handle === auth.user.handle ? (
-                <Button>Edit Profile</Button>
+                <EditProfileDialog
+                  defaultValues={{
+                    name: user.name,
+                    bio: user.bio,
+                    handle: user.handle,
+                  }}
+                />
               ) : (
                 <Button>Follow</Button>
               )}

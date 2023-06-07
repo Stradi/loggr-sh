@@ -1,14 +1,19 @@
 import { Transition } from "@headlessui/react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { XIcon } from "../icons";
 
-export default function Dialog({ title, description, children, trigger }) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function Dialog({
+  title,
+  description,
+  children,
+  trigger,
+  isOpen,
+  setIsOpen,
+}) {
   return (
     <DialogPrimitive.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DialogPrimitive.Trigger>
+      <DialogPrimitive.Trigger asChild>
         {trigger || <button className="btn btn-primary">Open Dialog</button>}
       </DialogPrimitive.Trigger>
       <DialogPrimitive.Portal forceMount>

@@ -1,8 +1,10 @@
 import clsx from "clsx";
+import { forwardRef } from "react";
 
-export default function Button({ className, disabled, ...props }) {
+const Button = forwardRef(({ className, disabled, ...props }, ref) => {
   return (
     <button
+      ref={ref}
       className={clsx(
         "px-4 py-2 flex items-center justify-center text-center rounded-xl font-semibold text-neutral-100 text-sm md:text-base",
         "transition-[box-shadow,background-color] duration-150",
@@ -15,4 +17,7 @@ export default function Button({ className, disabled, ...props }) {
       {...props}
     />
   );
-}
+});
+
+Button.displayName = "Button";
+export default Button;
