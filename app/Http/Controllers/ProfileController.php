@@ -36,28 +36,21 @@ class ProfileController extends Controller
     $user->name = $request->name;
     $user->bio = $request->bio;
 
+    // TODO: Optionally, we can create multiple sizes of the image by
+    //       adding a queue job here. But we probably don't want this.
     if ($request->hasFile('avatar')) {
-      // TODO: There may be a better way to do this
+      $file = $request->file('avatar');
 
-      $image = $request->file('avatar');
-      $extension = pathinfo($image->getClientOriginalName(), PATHINFO_EXTENSION);
+      $uuid = Str::orderedUuid();
+      $extension = $file->getClientOriginalExtension();
+      $full_filename = $uuid . '.' . $extension;
 
-      $imageObj = Image::make($image->getRealPath());
-      $imageObj->resize(500, 500, function ($constraint) {
-        $constraint->aspectRatio();
-      });
+      $image = Image::make($file);
+      $image->fit(200, 200);
 
-      $filename = Str::orderedUuid();
-      $tmp = tempnam(sys_get_temp_dir(), $filename) . '.' . $extension;
-      $imageObj->save($tmp);
-
-      Log::info('Filename is ' . $filename);
-      Log::info('Extension is ' . $extension);
-      Log::info('Saved tmp file to ' . $tmp);
-      Log::info('Upload URL is avatars/' . $filename . '.' . $extension);
-
-      $url = Storage::disk('s3')->put('avatars/' . $filename . '.' . $extension, $imageObj, 'public');
-      $user->avatar = Env::get('AWS_URL') . '/avatars/' . $filename . '.' . $extension;
+      $resource = $image->stream()->detach();
+      Storage::disk('s3')->put('avatars/' . $full_filename, $resource);
+      $user->avatar = Env::get('AWS_URL') . '/avatars/' . $full_filename;
     }
 
     $user->save();
