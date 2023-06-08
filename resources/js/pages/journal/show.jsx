@@ -11,7 +11,7 @@ export default function Page({ auth, journal }) {
         <header className="px-4 py-8 text-center space-y-4">
           <h1 className="font-medium text-3xl">{journal.name}</h1>
           <p className="text-lg">{journal.description}</p>
-          <div className="text-left w-64 mx-auto block">
+          <div className="text-left max-w-[256px] w-max mx-auto block">
             <MiniProfileButton user={journal.user} />
           </div>
           <div className="flex gap-4 justify-center">
