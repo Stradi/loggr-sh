@@ -39,7 +39,7 @@ export default function SidebarContent() {
         {auth && auth.user ? (
           <div className="flex flex-col gap-2">
             <NewJournalDialog />
-            <ProfileButton user={auth.user} />
+            <ProfileButton />
             <LogoutButton />
           </div>
         ) : (
