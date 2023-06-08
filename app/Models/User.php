@@ -53,4 +53,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Journal::class);
     }
+
+    /**
+     * Get the entries for the user.
+     */
+    public function entries(): HasMany
+    {
+        return $this->hasMany(JournalEntry::class);
+    }
 }

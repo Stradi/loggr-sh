@@ -6,6 +6,7 @@ import clsx from "clsx";
 import ProfileButton from "../../components/profile-button";
 import LogoutButton from "./logout-button";
 import NewJournalDialog from "./new-journal-dialog";
+import NewJournalEntryDialog from "./new-journal-entry-dialog";
 
 export default function SidebarContent() {
   const [setIsOpen] = useSidebarStore((state) => [state.setIsOpen]);
@@ -38,6 +39,7 @@ export default function SidebarContent() {
         <div className="grow"></div>
         {auth && auth.user ? (
           <div className="flex flex-col gap-2">
+            <NewJournalEntryDialog />
             <NewJournalDialog />
             <ProfileButton />
             <LogoutButton />

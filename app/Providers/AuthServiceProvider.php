@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\Journal;
+use App\Models\JournalEntry;
+use App\Policies\JournalEntryPolicy;
 use App\Policies\JournalPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,7 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Journal::class => JournalPolicy::class
+        Journal::class => JournalPolicy::class,
+        JournalEntry::class => JournalEntryPolicy::class,
     ];
 
     /**

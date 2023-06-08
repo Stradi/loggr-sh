@@ -5,31 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Journal extends Model
+class JournalEntry extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
+        'title',
+        'content',
     ];
 
     /**
-     * Get the user that owns the journal.
+     * Get the journal that owns the journal entry.
+     */
+    public function journal(): BelongsTo
+    {
+        return $this->belongsTo(Journal::class);
+    }
+
+    /**
+     * Get the user that owns the journal entry.
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the entries for the journal.
-     */
-    public function entries(): HasMany
-    {
-        return $this->hasMany(JournalEntry::class);
     }
 
     public function getRouteKeyName(): string

@@ -39,7 +39,7 @@ export default function Page({ auth, journal }) {
             )}
           </div>
         </header>
-        <main></main>
+        <main>{JSON.stringify(journal.entries)}</main>
       </section>
     </AppLayout>
   );

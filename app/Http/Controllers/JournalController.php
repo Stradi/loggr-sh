@@ -19,7 +19,7 @@ class JournalController extends Controller
     public function show(Request $request, Journal $journal)
     {
         return Inertia::render('journal/show', [
-            'journal' => $journal->load(['user'])
+            'journal' => $journal->load(['user', 'entries']),
         ]);
     }
 
