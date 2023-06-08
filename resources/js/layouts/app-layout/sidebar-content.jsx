@@ -3,9 +3,9 @@ import Button from "@/components/ui/button";
 import useSidebarStore from "@/stores/sidebar-store";
 import { Link, usePage } from "@inertiajs/react";
 import clsx from "clsx";
+import ProfileButton from "../../components/profile-button";
 import LogoutButton from "./logout-button";
 import NewJournalDialog from "./new-journal-dialog";
-import ProfileButton from "./profile-button";
 
 export default function SidebarContent() {
   const [setIsOpen] = useSidebarStore((state) => [state.setIsOpen]);

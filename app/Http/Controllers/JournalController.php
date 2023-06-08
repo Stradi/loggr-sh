@@ -19,7 +19,7 @@ class JournalController extends Controller
     public function show(Request $request, Journal $journal)
     {
         return Inertia::render('journal/show', [
-            'journal' => $journal,
+            'journal' => $journal->load(['user'])
         ]);
     }
 
@@ -72,13 +72,13 @@ class JournalController extends Controller
     public function update(Request $request, Journal $journal)
     {
         $request->validate([
-            'name' => 'optional|string|max:255',
-            'slug' => 'optional|string|max:255|unique:journals,slug,' . $journal->id,
-            'description' => 'optional|string|max:255',
+            'name' => 'required|string|max:255',
+            'slug' => 'required|alpha_dash|max:255|unique:journals,slug,' . $journal->id,
+            'description' => 'required|string|max:255',
         ]);
 
         $journal->name = $request->name;
-        $journal->slug = $request->slug;
+        $journal->slug = Str::slug($request->slug);
         $journal->description = $request->description;
         $journal->save();
 
@@ -94,6 +94,6 @@ class JournalController extends Controller
     public function destroy(Request $request, Journal $journal)
     {
         $journal->delete();
-        return redirect()->back();
+        return to_route('home');
     }
 }
