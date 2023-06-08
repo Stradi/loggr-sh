@@ -22,7 +22,7 @@ export default function Sidebar({ children }) {
     <aside
       ref={sidebarRef}
       className={clsx(
-        "w-full max-w-[250px] fixed left-0 h-full z-20",
+        "w-full max-w-[250px] fixed left-0 h-full z-30",
         "border-r bg-white/70 backdrop-blur-sm border-neutral-300",
         "transition-transform duration-300",
         "md:relative md:left-auto md:top-auto ",

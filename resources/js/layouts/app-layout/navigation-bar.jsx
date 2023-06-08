@@ -8,7 +8,7 @@ export default function NavigationBar() {
   ]);
 
   return (
-    <nav className="sticky top-0 border-b bg-white/70 backdrop-blur-sm border-neutral-300 h-12">
+    <nav className="z-20 sticky top-0 border-b bg-white/70 backdrop-blur-sm border-neutral-300 h-12">
       <div className="flex items-center p-1 h-full justify-between">
         <button
           id="close-sidebar-button"

@@ -49,17 +49,15 @@ class JournalEntryController extends Controller
     public function update(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'slug' => 'required|alpha_dash|max:255|unique:journal_entries,slug,' . $journalEntry->id,
-            'content' => 'required|string',
+            'name' => 'nullable|string|max:255',
+            'slug' => 'nullable|alpha_dash|max:255|unique:journal_entries,slug,' . $journalEntry->id,
+            'content' => 'nullable|string',
         ]);
 
-        $journalEntry->name = $request->name;
-        $journalEntry->slug = Str::slug($request->slug);
-        $journalEntry->content = $request->content;
+        $journalEntry->name = $request->name ? $request->name : $journalEntry->name;
+        $journalEntry->slug = $request->slug ? Str::slug($request->slug) : $journalEntry->slug;
+        $journalEntry->content = $request->content ? $request->content : $journalEntry->content;
         $journalEntry->save();
-
-        return to_route('journal_entry.show', ['journal' => $journal, 'journalEntry' => $journalEntry]);
     }
 
     public function destroy(Request $request, Journal $journal, JournalEntry $journalEntry)
