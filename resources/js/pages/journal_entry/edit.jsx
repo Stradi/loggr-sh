@@ -40,7 +40,7 @@ export default function Page({ journalEntry }) {
               <EditJournalEntryDialog
                 defaultValues={{
                   slug: journalEntry.slug,
-                  is_public: false,
+                  is_public: journalEntry.is_public ? "1" : "0",
                 }}
                 journalSlug={journalEntry.journal.slug}
               />

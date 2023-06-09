@@ -10,7 +10,7 @@ import { useState } from "react";
 export default function EditJournalEntryDialog({
   defaultValues = {
     slug: "",
-    is_public: "",
+    is_public: "0",
   },
   journalSlug,
 }) {
@@ -21,6 +21,7 @@ export default function EditJournalEntryDialog({
   });
 
   function onSubmit(e) {
+    console.log(data.is_public);
     e.preventDefault();
     patch(
       route("journal_entry.update", {
@@ -66,9 +67,9 @@ export default function EditJournalEntryDialog({
           <Label htmlFor="is_public">Make it public</Label>
           <Checkbox
             id="is_public"
-            checked={data.is_public}
+            checked={data.is_public === "1"}
             onCheckedChange={(checked) => {
-              setData("is_public", checked);
+              setData("is_public", checked ? "1" : "0");
             }}
           />
           <span className="text-sm text-neutral-500 font-medium">
