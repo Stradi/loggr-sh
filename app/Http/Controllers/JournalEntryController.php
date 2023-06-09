@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use App\Models\JournalEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 use Inertia\Inertia;
@@ -48,16 +49,20 @@ class JournalEntryController extends Controller
 
     public function update(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
+        Log::debug($request->all());
         $request->validate([
-            'name' => 'nullable|string|max:255',
-            'slug' => 'nullable|alpha_dash|max:255|unique:journal_entries,slug,' . $journalEntry->id,
-            'content' => 'nullable|string',
+            'name' => 'sometimes|string|max:255',
+            'slug' => 'sometimes|alpha_dash|max:255|unique:journal_entries,slug,' . $journalEntry->id,
+            'content' => 'sometimes|string',
+            'is_public' => 'sometimes|boolean'
         ]);
 
         $journalEntry->name = $request->name ? $request->name : $journalEntry->name;
         $journalEntry->slug = $request->slug ? Str::slug($request->slug) : $journalEntry->slug;
         $journalEntry->content = $request->content ? $request->content : $journalEntry->content;
         $journalEntry->save();
+
+        return to_route('journal_entry.edit', ['journal' => $journal, 'journalEntry' => $journalEntry]);
     }
 
     public function destroy(Request $request, Journal $journal, JournalEntry $journalEntry)
