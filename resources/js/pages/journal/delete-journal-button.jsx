@@ -26,8 +26,8 @@ export default function DeleteJournalButton({ slug }) {
       ref={buttonRef}
       onClick={onClick}
       className={clsx(
-        isClickedOnce && "bg-red-500 text-white ring-red-600",
-        isClickedOnce && "hover:bg-red-600 hover:ring-red-700"
+        isClickedOnce && "!bg-red-500 !text-white !ring-red-600",
+        isClickedOnce && "!hover:bg-red-600 !hover:ring-red-700"
       )}
     >
       {isClickedOnce ? "Are you sure?" : "Delete"}

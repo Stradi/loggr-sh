@@ -46,12 +46,15 @@ export default function SidebarContent() {
           </div>
         ) : (
           <div className="flex flex-col gap-2">
-            <Link href="/login" as="button">
-              <Button className="w-full">Login</Button>
-            </Link>
-            <Link href="/register">
-              <Button className="w-full">Register</Button>
-            </Link>
+            <Button className="w-full">
+              <Link href="/login" as="button">
+                Login
+              </Link>
+            </Button>
+
+            <Button asChild className="w-full">
+              <Link href="/register">Register</Link>
+            </Button>
           </div>
         )}
       </main>
