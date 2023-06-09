@@ -21,8 +21,8 @@ export default function Page({ journalEntry }) {
 
   return (
     <AppLayout>
-      <div className="p-4 max-w-3xl space-y-2">
-        <nav>
+      <div className="max-w-3xl space-y-2 border-r border-neutral-300 border-b">
+        <nav className="p-4 border-b border-neutral-300">
           <ol className="flex justify-between items-center">
             <li>
               <Button variant="outline" asChild>
@@ -47,7 +47,9 @@ export default function Page({ journalEntry }) {
             </li>
           </ol>
         </nav>
-        <EditorRenderer journalEntry={journalEntry} onSave={handleSave} />
+        <div className="p-4">
+          <EditorRenderer journalEntry={journalEntry} onSave={handleSave} />
+        </div>
       </div>
     </AppLayout>
   );
