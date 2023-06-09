@@ -88,3 +88,11 @@ export function ChatBubbleIcon(props) {
     </BaseIcon>
   );
 }
+
+export function CheckIcon(props) {
+  return (
+    <BaseIcon {...props}>
+      <polyline points="20 6 9 17 4 12" />
+    </BaseIcon>
+  );
+}
