@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slug')->nullable(false)->unique();
             $table->string('description')->nullable(false);
 
-            $table->foreignId('user_id')->nullable(false)->constrained();
+            $table->foreignId('user_id')->nullable(false)->constrained()->onDelete('cascade');
         });
     }
 

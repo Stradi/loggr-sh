@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('slug')->nullable(false)->unique();
             $table->text('content')->nullable(false);
 
-            $table->foreignId('journal_id')->nullable(false)->constrained();
-            $table->foreignId('user_id')->nullable(false)->constrained();
+            $table->foreignId('user_id')->nullable(false)->constrained()->onDelete('cascade');
+            $table->foreignId('journal_id')->nullable(false)->constrained()->onDelete('cascade');
         });
     }
 
