@@ -9,6 +9,19 @@ use Illuminate\Auth\Access\Response;
 
 class JournalEntryPolicy
 {
+  public function view(?User $user, JournalEntry $entry, Journal $journal): Response
+  {
+    if ($entry->is_public) {
+      return Response::allow();
+    }
+
+    if ($user && $user->id === $entry->user_id) {
+      return Response::allow();
+    }
+
+    return Response::deny('This journal entry is private.');
+  }
+
   /**
    * Determine whether the user can update the model.
    */
