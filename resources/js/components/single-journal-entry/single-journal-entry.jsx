@@ -12,6 +12,15 @@ export default function SingleJournalEntry({ journalEntry }) {
         <JournalEntryStats journalEntry={journalEntry} />
       </header>
       <section className="p-4 prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">
+        {!journalEntry.is_public && (
+          <div className="p-2 border border-neutral-300 bg-neutral-100 rounded-xl text-neutral-700">
+            <p>
+              <b>Note:</b> This entry currently isn't visible to anyone except
+              you. To make it public, go to the edit page and make it public in
+              the settings section.
+            </p>
+          </div>
+        )}
         <div
           dangerouslySetInnerHTML={{
             __html: journalEntry.content,
