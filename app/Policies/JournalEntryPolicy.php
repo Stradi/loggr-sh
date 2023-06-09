@@ -12,7 +12,7 @@ class JournalEntryPolicy
   /**
    * Determine whether the user can update the model.
    */
-  public function update(User $user, Journal $journal, JournalEntry $journalEntry): Response
+  public function update(User $user, JournalEntry $journalEntry, Journal $journal): Response
   {
     if ($user->id !== $journalEntry->user_id) {
       return Response::deny('You do not own this journal entry.');
@@ -28,7 +28,7 @@ class JournalEntryPolicy
   /**
    * Determine whether the user can delete the model.
    */
-  public function delete(User $user, Journal $journal, JournalEntry $journalEntry): Response
+  public function delete(User $user, JournalEntry $journalEntry, Journal $journal): Response
   {
     if ($user->id !== $journalEntry->user_id) {
       return Response::deny('You do not own this journal entry.');

@@ -15,19 +15,19 @@ Route::group([], function () {
     // Shows the edit page of this journal entry. Accessible to *authenticated* users only.
     Route::get('/j/{journal}/{journalEntry}/edit', [JournalEntryController::class, 'edit'])
         ->name('journal_entry.edit')
-        ->middleware(['auth', 'verified', 'can:update,journal,journalEntry']);
+        ->middleware(['auth', 'verified', 'can:update,journalEntry,journal']);
 
     // Updates a journal entry. Accessible to *authenticated* users only.
     Route::put('/j/{journal}/{journalEntry}', [JournalEntryController::class, 'update'])
         ->name('journal_entry.update')
-        ->middleware(['auth', 'verified', 'can:update,journal,journalEntry']);
+        ->middleware(['auth', 'verified', 'can:update,journalEntry,journal']);
 
     Route::patch('/j/{journal}/{journalEntry}', [JournalEntryController::class, 'update'])
         ->name('journal_entry.update')
-        ->middleware(['auth', 'verified', 'can:update,journal,journalEntry']);
+        ->middleware(['auth', 'verified', 'can:update,journalEntry,journal']);
 
     // Deletes a journal entry. Accessible to *authenticated* users only.
     Route::delete('/j/{journal}/{journalEntry}', [JournalEntryController::class, 'destroy'])
         ->name('journal_entry.destroy')
-        ->middleware(['auth', 'verified', 'can:delete,journal,journalEntry']);
+        ->middleware(['auth', 'verified', 'can:delete,journalEntry,journal']);
 });
