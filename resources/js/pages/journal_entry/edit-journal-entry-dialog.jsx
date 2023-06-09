@@ -73,7 +73,7 @@ export default function EditJournalEntryDialog({
             }}
           />
           <span className="text-sm text-neutral-500 font-medium">
-            {data.is_public
+            {data.is_public === "1"
               ? "Anyone can see this journal entry."
               : "Only you can see this journal entry."}
           </span>
