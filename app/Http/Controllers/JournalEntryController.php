@@ -23,6 +23,7 @@ class JournalEntryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'journal' => 'required|string|exists:journals,slug'
         ]);
 
         $journalEntry = new JournalEntry;

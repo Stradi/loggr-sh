@@ -14,13 +14,19 @@ export default function NewJournalEntryDialog() {
     props: { auth },
   } = usePage();
 
-  const { data, setData, post, processing, errors } = useForm({
+  const { data, setData, post, processing, errors, setError } = useForm({
     name: "",
-    journal: "loggr-sh",
+    journal: "",
   });
 
   function onSubmit(e) {
     e.preventDefault();
+
+    if (data.journal === "" || data.journal === null) {
+      setError("journal", "Please select a journal.");
+      return;
+    }
+
     post(route("journal_entry.store", data.journal), {
       onSuccess: () => setIsOpen(false),
     });
@@ -52,19 +58,23 @@ export default function NewJournalEntryDialog() {
           />
           {errors.name && <InputError>{errors.name}</InputError>}
         </div>
-        <div className="!flex-row items-center !gap-4">
+        <div>
           <Label htmlFor="journal">
             Journal <span className="text-red-500">*</span>
           </Label>
           <Select
+            id="journal"
             placeholder="Select a journal"
             items={auth.user.journals.map((journal) => ({
               value: journal.slug,
               label: `${journal.name} (${journal.slug})`,
             }))}
-            value={data.journal}
-            onValueChange={(value) => setData("journal", value)}
+            onValueChange={(value) => {
+              setData("journal", value);
+              setError("journal", null);
+            }}
           />
+          {errors.journal && <InputError>{errors.journal}</InputError>}
         </div>
         <Button type="submit">Save</Button>
       </form>
