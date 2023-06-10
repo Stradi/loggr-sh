@@ -3,7 +3,7 @@ import Button from "./ui/button";
 
 export default function MiniProfileButton({ user }) {
   return (
-    <Button asChild variant="outline" className="!gap-1 !p-1">
+    <Button asChild variant="outline" className="!gap-1 !p-1.5">
       <Link href={`/@${user.handle}`}>
         <img
           src={user.avatar}

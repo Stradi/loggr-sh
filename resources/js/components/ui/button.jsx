@@ -10,7 +10,7 @@ const Button = forwardRef(
       <Component
         ref={ref}
         className={clsx(
-          "px-4 py-2 flex items-center whitespace-nowrap justify-center text-center rounded-xl font-semibold text-neutral-100 text-sm md:text-base",
+          "px-4 py-2 flex items-center whitespace-nowrap justify-center text-center rounded-xl font-medium md:font-semibold text-neutral-100 text-sm md:text-base",
           "transition-[box-shadow,background-color] duration-150",
           "bg-neutral-900 hover:bg-neutral-800",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-neutral-600",

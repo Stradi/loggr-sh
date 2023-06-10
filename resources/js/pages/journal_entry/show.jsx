@@ -10,7 +10,7 @@ export default function Page({ auth, journalEntry }) {
   return (
     <AppLayout>
       <section className="max-w-3xl border-r border-b border-neutral-300">
-        <nav className="p-4 border-b border-neutral-300">
+        <nav className="p-2 md:p-4 border-b border-neutral-300">
           <ol className="flex justify-between items-center">
             <li>
               <Button variant="outline" asChild>
@@ -19,12 +19,15 @@ export default function Page({ auth, journalEntry }) {
                     journal: journalEntry.journal.slug,
                   })}
                 >
-                  Back to {journalEntry.journal.name}
+                  Back
+                  <span className="hidden sm:block">
+                    &nbsp;to {journalEntry.journal.name}
+                  </span>
                 </Link>
               </Button>
             </li>
             {auth.user && auth.user.id === journalEntry.user_id && (
-              <div className="flex gap-2">
+              <div className="flex gap-1">
                 <li>
                   <EditorDialog journalEntry={journalEntry} />
                 </li>

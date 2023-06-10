@@ -39,7 +39,7 @@ export default function EditorDialog({ journalEntry }) {
       isOpen={isOpen}
       setIsOpen={handleOpenChange}
       title="Edit Journal Entry"
-      description="Change the content of your journal entry."
+      description="Change the content of your journal entry. Don't worry, we are saving your changes automatically."
       trigger={<Button>Edit</Button>}
       contentClass="max-w-[768px]"
     >

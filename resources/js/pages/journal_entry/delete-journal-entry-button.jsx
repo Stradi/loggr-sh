@@ -38,7 +38,7 @@ export default function DeleteJournalEntryButton({
         isClickedOnce && "!hover:bg-red-600 !hover:ring-red-700"
       )}
     >
-      {isClickedOnce ? "Are you sure?" : "Delete"}
+      {isClickedOnce ? "Sure?" : "Delete"}
     </Button>
   );
 }
