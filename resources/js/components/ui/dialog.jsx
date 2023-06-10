@@ -43,7 +43,7 @@ export default function Dialog({
             >
               <DialogPrimitive.Content
                 className={clsx(
-                  "relative overflow-y-auto bg-white rounded-xl max-h-[95vh] max-w-[450px] w-full",
+                  "relative overflow-y-auto bg-white rounded-xl max-h-full md:max-h-[95vh] max-w-[450px] w-full",
                   contentClass
                 )}
               >

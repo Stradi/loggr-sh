@@ -11,8 +11,10 @@ class JournalEntry extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'name',
+        'slug',
         'content',
+        'is_public'
     ];
 
     /**

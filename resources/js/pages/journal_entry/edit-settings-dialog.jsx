@@ -38,9 +38,9 @@ export default function EditSettingsDialog({
     <Dialog
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title="Edit Journal Entry Settings"
+      title="Journal Entry Settings"
       description="Make some final adjustments to your journal entry and publish it."
-      trigger={<Button>Edit Settings</Button>}
+      trigger={<Button>Settings</Button>}
     >
       <form
         onSubmit={onSubmit}

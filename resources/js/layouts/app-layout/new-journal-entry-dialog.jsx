@@ -23,8 +23,8 @@ export default function NewJournalEntryDialog() {
 
   return (
     <Dialog
-      title="Create a new Journal"
-      description="Create a new Journal to start logging about your project."
+      title="Create a new Entry"
+      description="Create a new entry in your journal and start logging your progress, thoughts, and ideas."
       trigger={<Button className="w-full">New Entry</Button>}
       isOpen={isOpen}
       setIsOpen={setIsOpen}

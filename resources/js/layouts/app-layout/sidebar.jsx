@@ -1,13 +1,25 @@
 import useClickOutside from "@/hooks/use-click-outside";
 import useSidebarStore from "@/stores/sidebar-store";
 import clsx from "clsx";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Sidebar({ children }) {
   const [isOpen, setIsOpen] = useSidebarStore((state) => [
     state.isOpen,
     state.setIsOpen,
   ]);
+
+  useEffect(() => {
+    function onNavigate() {
+      setIsOpen(false);
+    }
+
+    document.addEventListener("inertia:navigate", onNavigate);
+
+    return () => {
+      document.removeEventListener("inertia:navigate", onNavigate);
+    };
+  }, []);
 
   const sidebarRef = useRef(null);
   useClickOutside(sidebarRef, (event) => {

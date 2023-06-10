@@ -8,7 +8,7 @@ const Checkbox = forwardRef(({ className, disabled, ...props }, ref) => {
     <CheckboxPrimitive.Root
       ref={ref}
       className={clsx(
-        "h-6 w-6 rounded-lg ring-1 ring-neutral-300 ring-offset-0",
+        "appearance-none h-6 w-6 rounded-lg ring-1 ring-neutral-300 ring-offset-0",
         "transition-[box-shadow] duration-150 text-neutral-800",
         "hover:ring-neutral-600",
         "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-600",
