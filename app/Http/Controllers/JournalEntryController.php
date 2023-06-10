@@ -28,6 +28,7 @@ class JournalEntryController extends Controller
         $journalEntry = new JournalEntry;
         $journalEntry->name = $request->name;
         $journalEntry->content = "";
+        $journalEntry->excerpt = "";
 
         $journalEntry->slug = Str::slug($request->name, '-') . '-' . Str::random(6);
 
@@ -58,6 +59,7 @@ class JournalEntryController extends Controller
         $journalEntry->name = $request->name ? $request->name : $journalEntry->name;
         $journalEntry->slug = $request->slug ? Str::slug($request->slug) : $journalEntry->slug;
         $journalEntry->content = $request->content ? $request->content : $journalEntry->content;
+        $journalEntry->excerpt = $request->content ? Str::limit(strip_tags($request->content, ["strong", "em"]), 255) : $journalEntry->excerpt;
         $journalEntry->is_public = $request->is_public !== null ? $request->is_public : $journalEntry->is_public;
         $journalEntry->save();
 

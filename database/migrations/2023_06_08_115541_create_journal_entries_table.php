@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable(false);
             $table->string('slug')->nullable(false)->unique();
             $table->text('content')->nullable(false);
+            $table->text('excerpt')->nullable(false);
             $table->boolean('is_public')->nullable(false)->default(false);
 
             $table->foreignId('user_id')->nullable(false)->constrained()->onDelete('cascade');

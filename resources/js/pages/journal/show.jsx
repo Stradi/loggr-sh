@@ -1,3 +1,4 @@
+import MiniJournalEntry from "@/components/mini-journal-entry/mini-journal-entry";
 import MiniProfileButton from "@/components/mini-profile-button";
 import Button from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
@@ -39,7 +40,22 @@ export default function Page({ auth, journal }) {
             )}
           </div>
         </header>
-        <main>{JSON.stringify(journal.entries)}</main>
+        <main>
+          {journal.entries.length > 0 ? (
+            journal.entries.map((entry) => (
+              <MiniJournalEntry
+                key={entry.id}
+                journalEntry={{
+                  ...entry,
+                  journal,
+                  user: journal.user,
+                }}
+              />
+            ))
+          ) : (
+            <p className="text-center py-8">No entries yet.</p>
+          )}
+        </main>
       </section>
     </AppLayout>
   );

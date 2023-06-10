@@ -10,7 +10,11 @@ export default function JournalEntryStats({ journalEntry }) {
     <div className="flex gap-2">
       <button
         className="flex gap-2 hover:bg-red-500/10 p-2 rounded-xl group"
-        onClick={() => setHasLiked(!hasLiked)}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          setHasLiked(!hasLiked);
+        }}
       >
         <HeartIcon
           svgClassName={clsx(
@@ -29,7 +33,11 @@ export default function JournalEntryStats({ journalEntry }) {
       </button>
       <button
         className="flex gap-2 hover:bg-sky-500/10 p-2 rounded-xl group"
-        onClick={() => setHasCommented(!hasCommented)}
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          setHasCommented(!hasCommented);
+        }}
       >
         <ChatBubbleIcon
           svgClassName={clsx(
