@@ -37,14 +37,7 @@ class JournalEntryController extends Controller
 
         $journalEntry->save();
 
-        return to_route('journal_entry.edit', ['journal' => $journal, 'journalEntry' => $journalEntry]);
-    }
-
-    public function edit(Request $request, Journal $journal, JournalEntry $journalEntry)
-    {
-        return Inertia::render('journal_entry/edit', [
-            'journalEntry' => $journalEntry->load(['journal', 'user']),
-        ]);
+        return to_route('journal_entry.show', ['journal' => $journal, 'journalEntry' => $journalEntry]);
     }
 
     public function update(Request $request, Journal $journal, JournalEntry $journalEntry)
@@ -63,7 +56,7 @@ class JournalEntryController extends Controller
         $journalEntry->is_public = $request->is_public !== null ? $request->is_public : $journalEntry->is_public;
         $journalEntry->save();
 
-        return to_route('journal_entry.edit', ['journal' => $journal, 'journalEntry' => $journalEntry]);
+        return to_route('journal_entry.show', ['journal' => $journal, 'journalEntry' => $journalEntry]);
     }
 
     public function destroy(Request $request, Journal $journal, JournalEntry $journalEntry)

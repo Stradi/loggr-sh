@@ -7,7 +7,7 @@ import Label from "@/components/ui/label";
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 
-export default function EditJournalEntryDialog({
+export default function EditSettingsDialog({
   defaultValues = {
     slug: "",
     is_public: "0",

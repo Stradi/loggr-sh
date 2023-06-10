@@ -2,6 +2,8 @@ import SingleJournalEntry from "@/components/single-journal-entry/single-journal
 import Button from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
 import { Link } from "@inertiajs/react";
+import EditSettingsDialog from "./edit-settings-dialog";
+import EditorDialog from "./editor-dialog";
 
 export default function Page({ auth, journalEntry }) {
   console.log(auth);
@@ -22,18 +24,20 @@ export default function Page({ auth, journalEntry }) {
               </Button>
             </li>
             {auth.user && auth.user.id === journalEntry.user_id && (
-              <li>
-                <Button asChild>
-                  <Link
-                    href={route("journal_entry.edit", {
-                      journal: journalEntry.journal.slug,
-                      journalEntry: journalEntry.slug,
-                    })}
-                  >
-                    Edit
-                  </Link>
-                </Button>
-              </li>
+              <div className="flex gap-2">
+                <li>
+                  <EditorDialog journalEntry={journalEntry} />
+                </li>
+                <li>
+                  <EditSettingsDialog
+                    defaultValues={{
+                      slug: journalEntry.slug,
+                      is_public: journalEntry.is_public,
+                    }}
+                    journalSlug={journalEntry.journal.slug}
+                  />
+                </li>
+              </div>
             )}
           </ol>
         </nav>

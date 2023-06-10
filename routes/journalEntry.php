@@ -14,11 +14,6 @@ Route::group([], function () {
         ->name('journal_entry.store')
         ->middleware(['auth', 'verified']);
 
-    // Shows the edit page of this journal entry. Accessible to *authenticated* users only.
-    Route::get('/j/{journal}/{journalEntry}/edit', [JournalEntryController::class, 'edit'])
-        ->name('journal_entry.edit')
-        ->middleware(['auth', 'verified', 'can:update,journalEntry,journal']);
-
     // Updates a journal entry. Accessible to *authenticated* users only.
     Route::put('/j/{journal}/{journalEntry}', [JournalEntryController::class, 'update'])
         ->name('journal_entry.update')
