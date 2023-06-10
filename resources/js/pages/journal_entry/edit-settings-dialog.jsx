@@ -21,7 +21,6 @@ export default function EditSettingsDialog({
   });
 
   function onSubmit(e) {
-    console.log(data.is_public);
     e.preventDefault();
     patch(
       route("journal_entry.update", {

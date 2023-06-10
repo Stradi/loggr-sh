@@ -6,7 +6,6 @@ import EditSettingsDialog from "./edit-settings-dialog";
 import EditorDialog from "./editor-dialog";
 
 export default function Page({ auth, journalEntry }) {
-  console.log(auth);
   return (
     <AppLayout>
       <section className="max-w-3xl border-r border-b border-neutral-300">
