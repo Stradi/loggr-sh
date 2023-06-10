@@ -2,6 +2,7 @@ import SingleJournalEntry from "@/components/single-journal-entry/single-journal
 import Button from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
 import { Link } from "@inertiajs/react";
+import DeleteJournalEntryButton from "./delete-journal-entry-button";
 import EditSettingsDialog from "./edit-settings-dialog";
 import EditorDialog from "./editor-dialog";
 
@@ -34,6 +35,12 @@ export default function Page({ auth, journalEntry }) {
                       is_public: journalEntry.is_public,
                     }}
                     journalSlug={journalEntry.journal.slug}
+                  />
+                </li>
+                <li>
+                  <DeleteJournalEntryButton
+                    journalSlug={journalEntry.journal.slug}
+                    journalEntrySlug={journalEntry.slug}
                   />
                 </li>
               </div>

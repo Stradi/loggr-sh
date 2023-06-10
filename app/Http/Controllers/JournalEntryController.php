@@ -63,6 +63,6 @@ class JournalEntryController extends Controller
     public function destroy(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
         $journalEntry->delete();
-        return to_route('home');
+        return to_route('journal.show', ['journal' => $journal]);
     }
 }
