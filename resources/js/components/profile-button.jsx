@@ -6,7 +6,7 @@ export default function ProfileButton() {
     props: { auth },
   } = usePage();
   return (
-    <Button asChild variant="outline" className="!justify-start !p-1.5">
+    <Button asChild variant="outline" className="!justify-start !p-1.5 gap-2">
       <Link href={`/@${auth.user.handle}`}>
         <img
           src={auth.user.avatar}
@@ -15,7 +15,7 @@ export default function ProfileButton() {
         />
         <div className="min-w-0">
           <p className="truncate font-medium">{auth.user.name}</p>
-          <p className="truncate font-medium text-neutral-500 text-sm">
+          <p className="truncate font-medium text-neutral-500 text-sm text-left">
             @{auth.user.handle}
           </p>
         </div>
