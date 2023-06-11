@@ -72,7 +72,7 @@ class ProfileController extends Controller
     // TODO: Optionally, we can create multiple sizes of the image by
     //       adding a queue job here. But we probably don't want this.
     if ($request->hasFile('avatar')) {
-      $uploaded_file = $this->_upload_file_to_s3($request->file('avatar'), 'avatars', [256, 256]);
+      $uploaded_file = $this->_upload_file_to_s3($request->file('avatar'), 'avatars', [400, 400]);
 
       if ($user->avatar) {
         $filename = basename($user->avatar);
@@ -83,7 +83,7 @@ class ProfileController extends Controller
     }
 
     if ($request->hasFile('cover_image')) {
-      $uploaded_file = $this->_upload_file_to_s3($request->file('cover_image'), 'cover_images', [1024, 256]);
+      $uploaded_file = $this->_upload_file_to_s3($request->file('cover_image'), 'cover_images', [1500, 500]);
 
       if ($user->cover_image) {
         $filename = basename($user->cover_image);

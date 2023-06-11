@@ -9,46 +9,44 @@ export default function Page({ auth, user }) {
         <header>
           <div className="relative">
             <img
-              src={user.cover_image ?? "https://picsum.photos/768/256"}
+              src={user.cover_image}
               alt="Cover"
-              className="h-32 md:h-64 w-full object-cover"
+              className="h-36 md:h-72 w-full object-cover"
             />
+          </div>
+          <div className="relative">
             <img
-              //------------------------v Make this a placeholder image
-              src={user.avatar ?? "https://picsum.photos/512"}
+              src={user.avatar}
               alt="Avatar"
-              className="w-24 md:w-40 aspect-square absolute -bottom-14 rounded-full border-2 border-white left-2 md:left-4"
+              className="border-2 border-white rounded-full w-32 md:w-44 absolute -translate-y-1/2 left-2"
             />
-          </div>
-          <div className="ml-28 md:ml-44 flex justify-between mt-1 mr-1">
-            <div className="[&>*]:leading-tight min-w-0">
-              {" "}
-              <h1 className="truncate text-lg md:text-2xl font-medium">
-                {user.name || "John Doe"}
-              </h1>
-              <p className="truncate text-sm md:text-base text-neutral-600 font-medium">
-                @{user.handle}
-              </p>
+            <div className="flex justify-between ml-[136px] md:ml-[184px] p-2">
+              <div className="[&>*]:leading-tight min-w-0">
+                {" "}
+                <h1 className="truncate text-lg md:text-3xl font-bold">
+                  {user.name}
+                </h1>
+                <p className="truncate text-sm md:text-base text-neutral-600 font-medium">
+                  @{user.handle}
+                </p>
+              </div>
+              <div className="flex gap-1 h-fit">
+                {auth.user && user.handle === auth.user.handle ? (
+                  <EditProfileDialog
+                    defaultValues={{
+                      name: user.name,
+                      bio: user.bio,
+                      handle: user.handle,
+                    }}
+                  />
+                ) : (
+                  <Button>Follow</Button>
+                )}
+              </div>
             </div>
-            <div className="flex gap-1">
-              {auth.user && user.handle === auth.user.handle ? (
-                <EditProfileDialog
-                  defaultValues={{
-                    name: user.name,
-                    bio: user.bio,
-                    handle: user.handle,
-                  }}
-                />
-              ) : (
-                <Button>Follow</Button>
-              )}
-            </div>
           </div>
-          <div className="p-4 space-y-2">
-            <p className="text-sm md:text-base">
-              {user.bio ||
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ultricies elit fringilla mi semper placerat. Curabitur ex risus, maximus non viverra sed, dictum porta tellus."}
-            </p>
+          <div className="p-4 space-y-2 md:mt-2">
+            <p className="text-sm md:text-base">{user.bio}</p>
             <div className="space-x-4 text-sm md:text-base">
               <span className="text-neutral-600 font-medium">
                 {user.followers_count || 0} Followers

@@ -41,6 +41,11 @@ class RegisteredUserController extends Controller
             'handle' => $request->handle,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+
+            'name' => $request->handle,
+            'bio' => 'Hey! I\'m new here.',
+            'avatar' => 'https://gravatar.com/avatar/' . md5(strtolower(trim($request->email))) . '?s=400',
+            'cover_image' => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP89R8AAvkB+0p/ESEAAAAASUVORK5CYII=',
         ]);
 
         event(new Registered($user));
