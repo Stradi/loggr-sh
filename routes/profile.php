@@ -1,10 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([], function () {
-  Route::get('@{handle}', [ProfileController::class, 'show'])->name('profile.show');
-  Route::post('@{handle}', [ProfileController::class, 'update'])->name('profile.update');
-  // Route::put('@{handle}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('@{handle}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('@{handle}', [ProfileController::class, 'update'])->name('profile.update');
+
+    Route::post('@{handle}/follow', [SocialController::class, 'follow'])
+        ->name('social.follow')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('@{handle}/unfollow', [SocialController::class, 'unfollow'])
+        ->name('social.unfollow')
+        ->middleware(['auth', 'verified']);
 });

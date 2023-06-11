@@ -1,8 +1,13 @@
 import Button from "@/components/ui/button";
 import AppLayout from "@/layouts/app-layout";
 import EditProfileDialog from "./edit-profile-dialog";
+import FollowButton from "@/pages/profile/follow-button.jsx";
 
-export default function Page({ auth, user }) {
+export default function Page({ auth, user, social = {
+  is_following: false,
+  followers_count: 0,
+  followings_count: 0
+} }) {
   return (
     <AppLayout auth={auth}>
       <section className="max-w-3xl divide-y divide-neutral-300 border-r border-neutral-300">
@@ -40,7 +45,7 @@ export default function Page({ auth, user }) {
                     }}
                   />
                 ) : (
-                  <Button>Follow</Button>
+                  <FollowButton targetHandle={user.handle} defaultValue={social.is_following} />
                 )}
               </div>
             </div>
@@ -49,10 +54,10 @@ export default function Page({ auth, user }) {
             <p className="text-sm md:text-base">{user.bio}</p>
             <div className="space-x-4 text-sm md:text-base">
               <span className="text-neutral-600 font-medium">
-                {user.followers_count || 0} Followers
+                {social.followers_count} Followers
               </span>
               <span className="text-neutral-600 font-medium">
-                {user.following_count || 0} Following
+                {social.followings_count} Following
               </span>
             </div>
           </div>

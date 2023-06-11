@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Env;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
-use Image;
+use Intervention\Image\Image;
 
 class ProfileController extends Controller
 {
@@ -46,8 +44,13 @@ class ProfileController extends Controller
   {
     $user = User::where('handle', $handle)->firstOrFail();
 
-    return Inertia::render('profile/show', [
-      'user' => $user,
+      return Inertia::render('profile/show', [
+          'user' => $user,
+          'social' => [
+              "followers_count" => $user->followers()->count(),
+              "followings_count" => $user->followings()->count(),
+              "is_following" => $request->user() ? $request->user()->isFollowing($user) : false,
+          ]
     ]);
   }
 
