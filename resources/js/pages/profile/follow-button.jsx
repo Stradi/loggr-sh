@@ -5,7 +5,10 @@ import {router} from "@inertiajs/react";
 export default function FollowButton({ targetHandle, defaultValue }) {
   const [isFollowing, setIsFollowing] = useState(defaultValue);
 
-  function handleFollow() {
+  function handleFollow(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     setIsFollowing(true);
     router.post(route("social.follow", {
       handle: targetHandle
@@ -18,7 +21,10 @@ export default function FollowButton({ targetHandle, defaultValue }) {
     });
   }
 
-  function handleUnfollow() {
+  function handleUnfollow(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
     setIsFollowing(false);
     router.post(route("social.unfollow", {
       handle: targetHandle
@@ -34,6 +40,7 @@ export default function FollowButton({ targetHandle, defaultValue }) {
   return (
     <Button
       onClick={isFollowing ? handleUnfollow : handleFollow}
+      variant={isFollowing && "outline"}
     >
       {
         isFollowing ? "Unfollow" : "Follow"

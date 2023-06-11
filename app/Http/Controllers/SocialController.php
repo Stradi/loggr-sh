@@ -6,7 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class SocialController extends Controller {
-    public function follow(Request $request, string $handle): RedirectResponse {
+    public function follow(Request $request, string $handle) {
         $sourceUser = $request->user();
         $targetUser = User::where('handle', $handle)->firstOrFail();
 
@@ -15,7 +15,7 @@ class SocialController extends Controller {
         return redirect()->back();
     }
 
-    public function unfollow(Request $request, string $handle): RedirectResponse {
+    public function unfollow(Request $request, string $handle) {
         $sourceUser = $request->user();
         $targetUser = User::where('handle', $handle)->firstOrFail();
 

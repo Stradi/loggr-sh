@@ -58,7 +58,7 @@ export default function Dialog({
                     {description}
                   </DialogPrimitive.Description>
                 </div>
-                <div className="p-6">{children}</div>
+                <div className="p-4">{children}</div>
               </DialogPrimitive.Content>
             </Transition.Child>
           </div>
