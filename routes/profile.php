@@ -15,4 +15,12 @@ Route::group([], function () {
     Route::post('@{handle}/unfollow', [SocialController::class, 'unfollow'])
         ->name('social.unfollow')
         ->middleware(['auth', 'verified']);
+
+    Route::post('/j/{journal}/follow', [SocialController::class, 'followJournal'])
+        ->name('social.follow_journal')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/j/{journal}/unfollow', [SocialController::class, 'unfollowJournal'])
+        ->name('social.unfollow_journal')
+        ->middleware(['auth', 'verified']);
 });

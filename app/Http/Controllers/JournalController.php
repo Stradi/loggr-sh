@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Journal;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -12,9 +11,9 @@ class JournalController extends Controller
 {
     /**
      * Show the journal page by its slug.
-     * @param  \Illuminate\Http\Request  $request The request object.
-     * @param  string  $slug The journal's slug. This is the `/j/{slug}`.
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request The request object.
+     * @param string $slug The journal's slug. This is the `/j/{slug}`.
+     * @return \Inertia\Response
      */
     public function show(Request $request, Journal $journal)
     {
@@ -22,6 +21,21 @@ class JournalController extends Controller
             'journal' => $journal->load(['user'])->load(['entries' => function ($query) {
                 $query->where('is_public', true)->orWhere('user_id', auth()->id())->orderBy('created_at', 'desc');
             }]),
+            'social' => [
+                "followers_count" => $journal->followers()->count(),
+                "is_following" => auth()->user() ? auth()->user()->isFollowing($journal) : false,
+                "followers" => $journal->followers()->with('followers')->paginate(12)->through(
+                    function ($follower) {
+                        return [
+                            'id' => $follower->id,
+                            'name' => $follower->name,
+                            'handle' => $follower->handle,
+                            'avatar' => $follower->avatar,
+                            'is_following' => auth()->user() ? auth()->user()->isFollowing($follower) : false
+                        ];
+                    }
+                )
+            ]
         ]);
     }
 
@@ -29,7 +43,7 @@ class JournalController extends Controller
      * Create a new journal on behalf of the user.
      * We only need the title of the journal since the content will
      * be edited in the journal/edit page.
-     * @param  \Illuminate\Http\Request  $request The request object.
+     * @param \Illuminate\Http\Request $request The request object.
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -54,8 +68,8 @@ class JournalController extends Controller
 
     /**
      * Show the edit page of a journal by its slug.
-     * @param  \Illuminate\Http\Request  $request The request object.
-     * @param  string  $slug The journal's slug. This is the `/j/{slug}/edit`.
+     * @param \Illuminate\Http\Request $request The request object.
+     * @param string $slug The journal's slug. This is the `/j/{slug}/edit`.
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, Journal $journal)
@@ -67,8 +81,8 @@ class JournalController extends Controller
 
     /**
      * Update a journal by its slug.
-     * @param  \Illuminate\Http\Request  $request The request object.
-     * @param  string  $slug The journal's slug. This is the `/j/{slug}`.
+     * @param \Illuminate\Http\Request $request The request object.
+     * @param string $slug The journal's slug. This is the `/j/{slug}`.
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Journal $journal)
@@ -89,8 +103,8 @@ class JournalController extends Controller
 
     /**
      * Delete a journal by its slug.
-     * @param  \Illuminate\Http\Request  $request The request object.
-     * @param  string  $slug The journal's slug. This is the `/j/{slug}`.
+     * @param \Illuminate\Http\Request $request The request object.
+     * @param string $slug The journal's slug. This is the `/j/{slug}`.
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Journal $journal)

@@ -1,6 +1,6 @@
 import Button from "@/components/ui/button.jsx";
 import {Link, usePage} from "@inertiajs/react";
-import FollowButton from "@/pages/profile/follow-button.jsx";
+import FollowButton from "@/components/follow-button.jsx";
 
 export default function SingleSocialProfile({user, hideFollowButton = false}) {
   const {
@@ -16,13 +16,14 @@ export default function SingleSocialProfile({user, hideFollowButton = false}) {
           <img src={user.avatar} alt="Avatar" className="w-10 h-10 rounded-full"/>
           <div className="text-left truncate grow">
             <p className="font-medium space-x-1 min-w-0 truncate">
-                {user.name}
+              {user.name}
             </p>
             <p className="text-sm font-normal truncate">@{user.handle}</p>
           </div>
           {
             !hideFollowButton && auth.user && auth.user.handle !== user.handle && (
-              <FollowButton targetHandle={user.handle} defaultValue={user.is_following} />
+              <FollowButton defaultValue={user.is_following} followRoute={route('social.follow', {handle: user.handle})}
+                            unfollowRoute={route('social.unfollow', {handle: user.handle})}/>
             )
           }
         </div>

@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
 use Intervention\Image\Image;
 
 class ProfileController extends Controller
@@ -49,7 +49,7 @@ class ProfileController extends Controller
             'user' => $user,
             'social' => [
                 "followers_count" => $user->followers()->count(),
-                "followings_count" => $user->followings()->count(),
+                "followings_count" => $user->followings()->where('followable_type', "App\\Models\\User")->count(),
                 "is_following" => auth()->user() ? auth()->user()->isFollowing($user) : false,
                 "followers" => $user->followers()
                     ->with('followers')
@@ -64,9 +64,11 @@ class ProfileController extends Controller
                         ];
                     }),
                 "followings" => $user->followings()
+                    ->where('followable_type', "App\\Models\\User")
                     ->with('followable')
                     ->paginate(12)
                     ->through(function ($following) {
+                        Log::debug($following);
                         return [
                             'id' => $following->followable->id,
                             'name' => $following->followable->name,

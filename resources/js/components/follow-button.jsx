@@ -2,7 +2,7 @@ import Button from "@/components/ui/button.jsx";
 import {useState} from "react";
 import {router} from "@inertiajs/react";
 
-export default function FollowButton({ targetHandle, defaultValue }) {
+export default function FollowButton({ defaultValue, followRoute, unfollowRoute }) {
   const [isFollowing, setIsFollowing] = useState(defaultValue);
 
   function handleFollow(e) {
@@ -10,9 +10,7 @@ export default function FollowButton({ targetHandle, defaultValue }) {
     e.preventDefault();
 
     setIsFollowing(true);
-    router.post(route("social.follow", {
-      handle: targetHandle
-    }), {}, {
+    router.post(followRoute, {}, {
       preserveScroll: true,
       preserveState: true,
       onSuccess: () => {
@@ -26,9 +24,7 @@ export default function FollowButton({ targetHandle, defaultValue }) {
     e.preventDefault();
 
     setIsFollowing(false);
-    router.post(route("social.unfollow", {
-      handle: targetHandle
-    }), {}, {
+    router.post(unfollowRoute, {}, {
       preserveScroll: true,
       preserveState: true,
       onSuccess: () => {
