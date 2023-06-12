@@ -4,17 +4,17 @@ import Input from "@/components/ui/input";
 import InputError from "@/components/ui/input-error";
 import Label from "@/components/ui/label";
 import Select from "@/components/ui/select";
-import { useForm, usePage } from "@inertiajs/react";
-import { useState } from "react";
+import {useForm, usePage} from "@inertiajs/react";
+import {useState} from "react";
 
 export default function NewJournalEntryDialog() {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
-    props: { auth },
+    props: {auth},
   } = usePage();
 
-  const { data, setData, post, processing, errors, setError } = useForm({
+  const {data, setData, post, processing, errors, setError} = useForm({
     name: "",
     journal: "",
   });
@@ -36,7 +36,8 @@ export default function NewJournalEntryDialog() {
     <Dialog
       title="Create a new Entry"
       description="Create a new entry in your journal and start logging your progress, thoughts, and ideas."
-      trigger={<Button className="w-full">New Entry</Button>}
+      trigger={<Button disabled={auth.user.journals.length === 0} className="w-full">New
+        Entry</Button>}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
     >
