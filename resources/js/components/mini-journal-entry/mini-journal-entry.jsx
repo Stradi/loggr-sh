@@ -1,5 +1,5 @@
 import {Link} from "@inertiajs/react";
-import AuthorInfo from "../single-journal-entry/author-info";
+import AuthorInfo from "../author-info.jsx";
 import JournalEntryStats from "../single-journal-entry/journal-entry-stats";
 
 export default function MiniJournalEntry({journalEntry}) {
@@ -15,7 +15,12 @@ export default function MiniJournalEntry({journalEntry}) {
       <article
         className="p-4 border-b border-neutral-300 group-hover/entry:bg-neutral-50 transition-[background-color] duration-150">
         <header>
-          <AuthorInfo journalEntry={journalEntry}/>
+          <AuthorInfo
+            name={journalEntry.user.name}
+            handle={journalEntry.user.handle}
+            avatar={journalEntry.user.avatar}
+            created_at={journalEntry.created_at}
+          />
         </header>
         <main
           className="flex flex-col gap-2 prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">

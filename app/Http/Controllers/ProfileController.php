@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Journal;
 use App\Models\JournalEntry;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -134,13 +135,24 @@ class ProfileController extends Controller
             ->where('is_public', true)
             ->orderBy('created_at', 'desc')
             ->select('id', 'name', 'slug', 'excerpt', 'created_at', 'updated_at', 'is_public', 'user_id', 'journal_id')
-            ->with(
-                ['user' => function ($query) {
-                    $query->select('id', 'name', 'handle', 'avatar');
-                }, 'journal' => function ($query) {
-                    $query->select('id', 'slug');
-                }
-                ])
+            ->with(['user' => function ($query) {
+                $query->select('id', 'name', 'handle', 'avatar');
+            }, 'journal' => function ($query) {
+                $query->select('id', 'slug');
+            }])
+            ->paginate(12);
+    }
+
+    public function journals(Request $request, string $handle)
+    {
+        $user = User::where('handle', $handle)->firstOrFail();
+        return Journal::where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->select('id', 'name', 'slug', 'description', 'created_at', 'updated_at')
+            ->withCount(['entries' => function ($query) {
+                $query->where('is_public', true);
+            }])
+            ->withCount('followers')
             ->paginate(12);
     }
 }

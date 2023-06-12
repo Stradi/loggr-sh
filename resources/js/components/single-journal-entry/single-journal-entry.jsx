@@ -1,17 +1,23 @@
-import AuthorInfo from "./author-info";
+import AuthorInfo from "../author-info.jsx";
 import JournalEntryStats from "./journal-entry-stats";
 
-export default function SingleJournalEntry({ journalEntry }) {
+export default function SingleJournalEntry({journalEntry}) {
   return (
     <article className="divide-y divide-neutral-300">
       <header className="space-y-4 p-4">
         <div className="prose">
           <h1>{journalEntry.name}</h1>
         </div>
-        <AuthorInfo journalEntry={journalEntry} />
-        <JournalEntryStats journalEntry={journalEntry} />
+        <AuthorInfo
+          name={journalEntry.user.name}
+          handle={journalEntry.user.handle}
+          avatar={journalEntry.user.avatar}
+          created_at={journalEntry.created_at}
+        />
+        <JournalEntryStats journalEntry={journalEntry}/>
       </header>
-      <section className="p-4 prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">
+      <section
+        className="p-4 prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">
         {!journalEntry.is_public && (
           <div className="p-2 border border-neutral-300 bg-neutral-100 rounded-xl text-neutral-700">
             <p>

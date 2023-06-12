@@ -3,6 +3,7 @@ import EntriesTab from "@/pages/profile/entries-tab.jsx";
 import clsx from "clsx";
 import Button from "@/components/ui/button.jsx";
 import {useState} from "react";
+import JournalsTab from "@/pages/profile/journals-tab.jsx";
 
 export default function Tabs({handle}) {
   const [value, setValue] = useState('entries');
@@ -19,7 +20,7 @@ export default function Tabs({handle}) {
         <EntriesTab handle={handle}/>
       </TabsPrimitive.Content>
       <TabsPrimitive.Content forceMount value="journals" hidden={value !== "journals"}>
-        <div className="p-4">Journals</div>
+        <JournalsTab handle={handle}/>
       </TabsPrimitive.Content>
       <TabsPrimitive.Content forceMount value="about" hidden={value !== "about"}>
         <div className="p-4">About</div>

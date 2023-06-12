@@ -26,4 +26,7 @@ Route::group([], function () {
 
     Route::get('@{handle}/entries', [ProfileController::class, 'entries'])
         ->name('profile.entries');
+
+    Route::get('@{handle}/journals', [ProfileController::class, 'journals'])
+        ->name('profile.journals');
 });
