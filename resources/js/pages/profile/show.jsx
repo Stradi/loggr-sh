@@ -2,6 +2,7 @@ import AppLayout from "@/layouts/app-layout";
 import EditProfileDialog from "./edit-profile-dialog";
 import FollowButton from "@/components/follow-button.jsx";
 import SocialDialog from "@/components/social-dialog.jsx";
+import Tabs from "@/pages/profile/tabs.jsx";
 
 export default function Page({
                                auth, user, social = {
@@ -49,12 +50,14 @@ export default function Page({
                     }}
                   />
                 ) : (
-                  <FollowButton defaultValue={social.is_following} followRoute={route('social.follow', {
-                    handle: user.handle
-                  })}
-                                unfollowRoute={route('social.unfollow', {
-                                  handle: user.handle
-                                })}
+                  <FollowButton
+                    defaultValue={social.is_following}
+                    followRoute={route('social.follow', {
+                      handle: user.handle
+                    })}
+                    unfollowRoute={route('social.unfollow', {
+                      handle: user.handle
+                    })}
                   />
                 )}
               </div>
@@ -90,7 +93,9 @@ export default function Page({
             </div>
           </div>
         </header>
-        <main></main>
+        <main className="h-full">
+          <Tabs handle={user.handle}/>
+        </main>
       </section>
     </AppLayout>
   );

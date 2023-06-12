@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JournalEntry;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Env;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -53,7 +53,7 @@ class ProfileController extends Controller
                 "is_following" => auth()->user() ? auth()->user()->isFollowing($user) : false,
                 "followers" => $user->followers()
                     ->with('followers')
-                    ->paginate(12)
+                    ->paginate(12, pageName: 'followers')
                     ->through(function ($follower) {
                         return [
                             'id' => $follower->id,
@@ -66,9 +66,8 @@ class ProfileController extends Controller
                 "followings" => $user->followings()
                     ->where('followable_type', "App\\Models\\User")
                     ->with('followable')
-                    ->paginate(12)
+                    ->paginate(12, pageName: 'followings')
                     ->through(function ($following) {
-                        Log::debug($following);
                         return [
                             'id' => $following->followable->id,
                             'name' => $following->followable->name,
@@ -126,5 +125,22 @@ class ProfileController extends Controller
         $user->save();
 
         return to_route('profile.show', ['handle' => $user->handle]);
+    }
+
+    public function entries(Request $request, string $handle)
+    {
+        $user = User::where('handle', $handle)->firstOrFail();
+        return JournalEntry::where('user_id', $user->id)
+            ->where('is_public', true)
+            ->orderBy('created_at', 'desc')
+            ->select('id', 'name', 'slug', 'excerpt', 'created_at', 'updated_at', 'is_public', 'user_id', 'journal_id')
+            ->with(
+                ['user' => function ($query) {
+                    $query->select('id', 'name', 'handle', 'avatar');
+                }, 'journal' => function ($query) {
+                    $query->select('id', 'slug');
+                }
+                ])
+            ->paginate(12);
     }
 }

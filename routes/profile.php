@@ -23,4 +23,7 @@ Route::group([], function () {
     Route::post('/j/{journal}/unfollow', [SocialController::class, 'unfollowJournal'])
         ->name('social.unfollow_journal')
         ->middleware(['auth', 'verified']);
+
+    Route::get('@{handle}/entries', [ProfileController::class, 'entries'])
+        ->name('profile.entries');
 });

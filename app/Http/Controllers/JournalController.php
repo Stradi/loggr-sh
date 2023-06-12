@@ -17,6 +17,7 @@ class JournalController extends Controller
      */
     public function show(Request $request, Journal $journal)
     {
+        // TODO: Paginate the journals.
         return Inertia::render('journal/show', [
             'journal' => $journal->load(['user'])->load(['entries' => function ($query) {
                 $query->where('is_public', true)->orWhere('user_id', auth()->id())->orderBy('created_at', 'desc');
