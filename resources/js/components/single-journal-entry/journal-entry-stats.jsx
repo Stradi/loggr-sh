@@ -1,10 +1,45 @@
+import { router } from "@inertiajs/react";
 import clsx from "clsx";
 import { useState } from "react";
 import { ChatBubbleIcon, HeartIcon } from "../icons";
 
 export default function JournalEntryStats({ journalEntry }) {
-  const [hasLiked, setHasLiked] = useState(false);
+  const [liked, setLiked] = useState(journalEntry.has_liked);
   const [hasCommented, setHasCommented] = useState(false);
+
+  function likeEntry() {
+    router.post(
+      route("social.like_journal_entry", {
+        journal: journalEntry.journal.slug,
+        journalEntry: journalEntry.slug,
+      }),
+      {},
+      {
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+          setLiked(true);
+        },
+      }
+    );
+  }
+
+  function unlikeEntry() {
+    router.post(
+      route("social.unlike_journal_entry", {
+        journal: journalEntry.journal.slug,
+        journalEntry: journalEntry.slug,
+      }),
+      {},
+      {
+        preserveScroll: true,
+        preserveState: true,
+        onSuccess: () => {
+          setLiked(false);
+        },
+      }
+    );
+  }
 
   return (
     <div className="flex gap-2">
@@ -13,22 +48,29 @@ export default function JournalEntryStats({ journalEntry }) {
         onClick={(e) => {
           e.stopPropagation();
           e.preventDefault();
-          setHasLiked(!hasLiked);
+
+          if (liked) {
+            setLiked(false);
+            unlikeEntry();
+          } else {
+            setLiked(true);
+            likeEntry();
+          }
         }}
       >
         <HeartIcon
           svgClassName={clsx(
             "text-neutral-500 group-hover:text-red-500",
-            hasLiked && "fill-red-500 text-red-500"
+            liked && "fill-red-500 text-red-500"
           )}
         />
         <span
           className={clsx(
             "text-sm font-medium text-neutral-500 group-hover:text-red-500",
-            hasLiked && "text-red-500"
+            liked && "text-red-500"
           )}
         >
-          {/* {journalEntry.like_count} */} 42
+          {journalEntry.likers_count}
         </span>
       </button>
       <button

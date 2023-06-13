@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journal;
+use App\Models\JournalEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -17,11 +19,37 @@ class JournalController extends Controller
      */
     public function show(Request $request, Journal $journal)
     {
-        // TODO: Paginate the journals.
         return Inertia::render('journal/show', [
-            'journal' => $journal->load(['user'])->load(['entries' => function ($query) {
-                $query->where('is_public', true)->orWhere('user_id', auth()->id())->orderBy('created_at', 'desc');
-            }]),
+            'journal' => [
+                'id' => $journal->id,
+                'name' => $journal->name,
+                'slug' => $journal->slug,
+                'description' => $journal->description,
+                'user' => $journal->user()->get()[0],
+                'entries' => $journal->entries()->with('user')->withCount('likers')
+                    ->where('is_public', true)
+                    ->orWhere('user_id', auth()->id())
+                    ->paginate(12)->through(
+                        function ($entry) {
+                            return [
+                                'id' => $entry->id,
+                                'name' => $entry->name,
+                                'slug' => $entry->slug,
+                                'excerpt' => $entry->excerpt,
+                                'created_at' => $entry->created_at,
+                                'is_public' => $entry->is_public,
+                                'user' => [
+                                    'id' => $entry->user->id,
+                                    'name' => $entry->user->name,
+                                    'handle' => $entry->user->handle,
+                                    'avatar' => $entry->user->avatar,
+                                ],
+                                'likers_count' => $entry->likers_count,
+                                'has_liked' => auth()->user() ? auth()->user()->hasLiked($entry) : false,
+                            ];
+                        }
+                    )
+            ],
             'social' => [
                 "followers_count" => $journal->followers()->count(),
                 "is_following" => auth()->user() ? auth()->user()->isFollowing($journal) : false,

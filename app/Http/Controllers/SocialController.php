@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journal;
+use App\Models\JournalEntry;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,6 +42,22 @@ class SocialController extends Controller
     {
         $sourceUser = $request->user();
         $sourceUser->unfollow($journal);
+
+        return redirect()->back();
+    }
+
+    public function likeJournalEntry(Request $request, Journal $journal, JournalEntry $journalEntry): RedirectResponse
+    {
+        $sourceUser = $request->user();
+        $sourceUser->like($journalEntry);
+
+        return redirect()->back();
+    }
+
+    public function unlikeJournalEntry(Request $request, Journal $journal, JournalEntry $journalEntry): RedirectResponse
+    {
+        $sourceUser = $request->user();
+        $sourceUser->unlike($journalEntry);
 
         return redirect()->back();
     }

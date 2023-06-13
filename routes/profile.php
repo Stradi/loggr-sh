@@ -29,4 +29,12 @@ Route::group([], function () {
 
     Route::get('@{handle}/journals', [ProfileController::class, 'journals'])
         ->name('profile.journals');
+
+    Route::post('/j/{journal}/{journalEntry}/like', [SocialController::class, 'likeJournalEntry'])
+        ->name('social.like_journal_entry')
+        ->middleware(['auth', 'verified']);
+
+    Route::post('/j/{journal}/{journalEntry}/unlike', [SocialController::class, 'unlikeJournalEntry'])
+        ->name('social.unlike_journal_entry')
+        ->middleware(['auth', 'verified']);
 });

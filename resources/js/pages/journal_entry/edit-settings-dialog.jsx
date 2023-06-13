@@ -10,7 +10,7 @@ import { useState } from "react";
 export default function EditSettingsDialog({
   defaultValues = {
     slug: "",
-    is_public: "0",
+    is_public: 0,
   },
   journalSlug,
 }) {
@@ -66,13 +66,13 @@ export default function EditSettingsDialog({
           <Label htmlFor="is_public">Make it public</Label>
           <Checkbox
             id="is_public"
-            checked={data.is_public === "1"}
+            checked={data.is_public === 1}
             onCheckedChange={(checked) => {
-              setData("is_public", checked ? "1" : "0");
+              setData("is_public", checked ? 1 : 0);
             }}
           />
           <span className="text-sm text-neutral-500 font-medium">
-            {data.is_public === "1"
+            {data.is_public === 1
               ? "Anyone can see this journal entry."
               : "Only you can see this journal entry."}
           </span>

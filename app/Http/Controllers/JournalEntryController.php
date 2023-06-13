@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Journal;
 use App\Models\JournalEntry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 use Inertia\Inertia;
@@ -15,7 +16,9 @@ class JournalEntryController extends Controller
     public function show(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
         return Inertia::render('journal_entry/show', [
-            'journalEntry' => $journalEntry->load(['journal', 'user']),
+            'journalEntry' => $journalEntry->load(['user', 'journal'])->loadCount('likers')->toArray() + [
+                "has_liked" => $request->user() ? $journalEntry->isLikedBy($request->user()) : false,
+            ],
         ]);
     }
 

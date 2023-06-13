@@ -140,7 +140,31 @@ class ProfileController extends Controller
             }, 'journal' => function ($query) {
                 $query->select('id', 'slug');
             }])
-            ->paginate(12);
+            ->withCount('likers')
+            ->paginate(12)
+            ->through(function ($entry) {
+                return [
+                    'id' => $entry->id,
+                    'name' => $entry->name,
+                    'slug' => $entry->slug,
+                    'excerpt' => $entry->excerpt,
+                    'created_at' => $entry->created_at,
+                    'updated_at' => $entry->updated_at,
+                    'is_public' => $entry->is_public,
+                    'likers_count' => $entry->likers_count,
+                    'has_liked' => auth()->user() ? auth()->user()->hasLiked($entry) : false,
+                    'user' => [
+                        'id' => $entry->user->id,
+                        'name' => $entry->user->name,
+                        'handle' => $entry->user->handle,
+                        'avatar' => $entry->user->avatar,
+                    ],
+                    'journal' => [
+                        'id' => $entry->journal->id,
+                        'slug' => $entry->journal->slug,
+                    ]
+                ];
+            });
     }
 
     public function journals(Request $request, string $handle)

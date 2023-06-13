@@ -1,18 +1,20 @@
-import AppLayout from "@/layouts/app-layout";
-import EditProfileDialog from "./edit-profile-dialog";
 import FollowButton from "@/components/follow-button.jsx";
 import SocialDialog from "@/components/social-dialog.jsx";
+import AppLayout from "@/layouts/app-layout";
 import Tabs from "@/pages/profile/tabs.jsx";
+import EditProfileDialog from "./edit-profile-dialog";
 
 export default function Page({
-                               auth, user, social = {
+  auth,
+  user,
+  social = {
     is_following: false,
     followers_count: 0,
     followings_count: 0,
     followers: [],
-    followings: []
-  }
-                             }) {
+    followings: [],
+  },
+}) {
   return (
     <AppLayout auth={auth}>
       <section className="max-w-3xl divide-y divide-neutral-300 border-r border-neutral-300">
@@ -52,11 +54,11 @@ export default function Page({
                 ) : (
                   <FollowButton
                     defaultValue={social.is_following}
-                    followRoute={route('social.follow', {
-                      handle: user.handle
+                    followRoute={route("social.follow", {
+                      handle: user.handle,
                     })}
-                    unfollowRoute={route('social.unfollow', {
-                      handle: user.handle
+                    unfollowRoute={route("social.unfollow", {
+                      handle: user.handle,
                     })}
                   />
                 )}
@@ -69,32 +71,54 @@ export default function Page({
               <SocialDialog
                 initialItems={social.followers.data}
                 initialNextPageUrl={social.followers.next_page_url}
-                getItemsFromPageData={(page) => page.props.social.followers.data}
-                getNextPageUrlFromPageData={(page) => page.props.social.followers.next_page_url}
+                getItemsFromPageData={(page) =>
+                  page.props.social.followers.data
+                }
+                getNextPageUrlFromPageData={(page) =>
+                  page.props.social.followers.next_page_url
+                }
                 dialogTitle={() => `Followers of @${user.handle}`}
-                dialogDescription={(count) => `@${user.handle} has ${count} followers.`}
-                dialogTrigger={(count) => <span
-                  className="text-neutral-600 font-medium hover:underline cursor-pointer">{count} Followers</span>}
-                emptyState={<div>Well, @{user.handle} has no followers, yet.</div>}
+                dialogDescription={(count) =>
+                  `@${user.handle} has ${count} followers.`
+                }
+                dialogTrigger={(count) => (
+                  <span className="text-neutral-600 font-medium hover:underline cursor-pointer">
+                    {count} Followers
+                  </span>
+                )}
+                emptyState={
+                  <div>Well, @{user.handle} has no followers, yet.</div>
+                }
                 resetItemsOnClose
               />
               <SocialDialog
                 initialItems={social.followings.data}
                 initialNextPageUrl={social.followings.next_page_url}
-                getItemsFromPageData={(page) => page.props.social.followings.data}
-                getNextPageUrlFromPageData={(page) => page.props.social.followings.next_page_url}
+                getItemsFromPageData={(page) =>
+                  page.props.social.followings.data
+                }
+                getNextPageUrlFromPageData={(page) =>
+                  page.props.social.followings.next_page_url
+                }
                 dialogTitle={() => `Followings of @${user.handle}`}
-                dialogDescription={(count) => `@${user.handle} follows ${count} people.`}
-                dialogTrigger={(count) => <span
-                  className="text-neutral-600 font-medium hover:underline cursor-pointer">{count} Followings</span>}
-                emptyState={<div>Well, @{user.handle} hasn't followed anyone, yet.</div>}
+                dialogDescription={(count) =>
+                  `@${user.handle} follows ${count} people.`
+                }
+                dialogTrigger={(count) => (
+                  <span className="text-neutral-600 font-medium hover:underline cursor-pointer">
+                    {count} Followings
+                  </span>
+                )}
+                emptyState={
+                  <div>Well, @{user.handle} hasn't followed anyone, yet.</div>
+                }
                 resetItemsOnClose
               />
             </div>
           </div>
         </header>
         <main className="h-full">
-          <Tabs handle={user.handle}/>
+          <Tabs handle={user.handle} />
         </main>
       </section>
     </AppLayout>
