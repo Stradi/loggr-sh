@@ -37,14 +37,8 @@ Route::post('/upload-to-s3', function (Request $request) {
     ]);
 });
 
-Route::post('/comment', [CommentController::class, "store"])
-    ->name("comment.store")
-    ->middleware(['auth', 'verified']);
-
-Route::get('/comment/{comment}/replies', [CommentController::class, "replies"])
-    ->name("comment.replies");
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/profile.php';
 require __DIR__ . '/journal.php';
 require __DIR__ . '/journalEntry.php';
+require __DIR__ . '/comments.php';

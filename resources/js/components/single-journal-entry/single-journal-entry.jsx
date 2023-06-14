@@ -2,7 +2,7 @@ import AuthorInfo from "../author-info.jsx";
 import JournalEntryStats from "./journal-entry-stats";
 import JournalEntryComments from "@/components/single-journal-entry/journal-entry-comments.jsx";
 
-export default function SingleJournalEntry({journalEntry}) {
+export default function SingleJournalEntry({journalEntry, comments}) {
   return (
     <article className="divide-y divide-neutral-300">
       <header className="space-y-4 p-4">
@@ -35,7 +35,7 @@ export default function SingleJournalEntry({journalEntry}) {
         />
       </section>
       <section>
-        <JournalEntryComments journalEntry={journalEntry}/>
+        <JournalEntryComments journalEntry={journalEntry} comments={comments} />
       </section>
     </article>
   );

@@ -13,20 +13,20 @@ class JournalEntryController extends Controller
     public function show(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
         $journalEntry = $journalEntry->load(['user', 'journal'])->loadCount('likers', 'comments');
-        $has_liked = $request->user() ? $journalEntry->isLikedBy($request->user()) : false;
+        $journalEntry = auth()->user()->attachLikeStatus($journalEntry);
         $comments = $journalEntry
             ->comments()
             ->with(['user'])
-            ->withCount(['replies'])
+            ->withCount(['replies', 'likers'])
             ->orderBy('created_at', 'desc')
             ->get();
 
+        $comments = auth()->user()->attachLikeStatus($comments);
+
         return Inertia::render('journal_entry/show', [
             'journal' => $journal,
-            'journalEntry' => $journalEntry->toArray() + [
-                    'has_liked' => $has_liked,
-                    'comments' => $comments
-                ]
+            'journalEntry' => $journalEntry,
+            'comments' => $comments
         ]);
     }
 

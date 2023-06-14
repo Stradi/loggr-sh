@@ -6,7 +6,7 @@ import DeleteJournalEntryButton from "./delete-journal-entry-button";
 import EditSettingsDialog from "./edit-settings-dialog";
 import EditorDialog from "./editor-dialog";
 
-export default function Page({ auth, journalEntry }) {
+export default function Page({ auth, journalEntry, comments }) {
   return (
     <AppLayout>
       <section className="max-w-3xl border-r border-b border-neutral-300">
@@ -50,7 +50,7 @@ export default function Page({ auth, journalEntry }) {
             )}
           </ol>
         </nav>
-        <SingleJournalEntry journalEntry={journalEntry} />
+        <SingleJournalEntry journalEntry={journalEntry} comments={comments} />
       </section>
     </AppLayout>
   );
