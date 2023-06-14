@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journal;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class JournalController extends Controller
 {
-    /**
-     * Show the journal page by its slug.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @param string $slug The journal's slug. This is the `/j/{slug}`.
-     * @return \Inertia\Response
-     */
-    public function show(Request $request, Journal $journal)
+    public function show(Journal $journal)
     {
         return Inertia::render('journal/show', [
             'journal' => [
@@ -24,7 +20,10 @@ class JournalController extends Controller
                 'slug' => $journal->slug,
                 'description' => $journal->description,
                 'user' => $journal->user()->get()[0],
-                'entries_count' => $journal->entries()->count(),
+                'entries_count' => $journal->entries()
+                    ->where('is_public', true)
+                    ->orWhere('user_id', auth()->id())
+                    ->count(),
                 'entries' => $journal->entries()
                     ->with(['user'])->withCount(['likers', 'comments'])
                     ->where('is_public', true)
@@ -69,13 +68,6 @@ class JournalController extends Controller
         ]);
     }
 
-    /**
-     * Create a new journal on behalf of the user.
-     * We only need the title of the journal since the content will
-     * be edited in the journal/edit page.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -96,25 +88,13 @@ class JournalController extends Controller
         return to_route('journal.show', ['journal' => $journal]);
     }
 
-    /**
-     * Show the edit page of a journal by its slug.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @param string $slug The journal's slug. This is the `/j/{slug}/edit`.
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, Journal $journal)
+    public function edit(Journal $journal)
     {
         return Inertia::render('journal/edit', [
             'journal' => $journal,
         ]);
     }
 
-    /**
-     * Update a journal by its slug.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @param string $slug The journal's slug. This is the `/j/{slug}`.
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Journal $journal)
     {
         $request->validate([
@@ -131,13 +111,7 @@ class JournalController extends Controller
         return to_route('journal.show', ['journal' => $journal]);
     }
 
-    /**
-     * Delete a journal by its slug.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @param string $slug The journal's slug. This is the `/j/{slug}`.
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, Journal $journal)
+    public function destroy(Journal $journal)
     {
         $journal->delete();
         return to_route('home');

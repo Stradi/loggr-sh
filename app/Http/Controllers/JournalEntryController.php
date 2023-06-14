@@ -10,10 +10,11 @@ use Inertia\Inertia;
 
 class JournalEntryController extends Controller
 {
-    public function show(Request $request, Journal $journal, JournalEntry $journalEntry)
+    public function show(Journal $journal, JournalEntry $journalEntry)
     {
         $journalEntry = $journalEntry->load(['user', 'journal'])->loadCount('likers', 'comments');
         $journalEntry = auth()->user()->attachLikeStatus($journalEntry);
+
         $comments = $journalEntry
             ->comments()
             ->with(['user'])
@@ -24,7 +25,6 @@ class JournalEntryController extends Controller
         $comments = auth()->user()->attachLikeStatus($comments);
 
         return Inertia::render('journal_entry/show', [
-            'journal' => $journal,
             'journalEntry' => $journalEntry,
             'comments' => $comments
         ]);
@@ -71,7 +71,7 @@ class JournalEntryController extends Controller
         return to_route('journal_entry.show', ['journal' => $journal, 'journalEntry' => $journalEntry]);
     }
 
-    public function destroy(Request $request, Journal $journal, JournalEntry $journalEntry)
+    public function destroy(Journal $journal, JournalEntry $journalEntry)
     {
         $journalEntry->delete();
         return to_route('journal.show', ['journal' => $journal]);

@@ -110,6 +110,7 @@ class ProfileController extends Controller
         $user = User::where('handle', $handle)->firstOrFail();
         return JournalEntry::where('user_id', $user->id)
             ->where('is_public', true)
+            ->orWhere('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
             ->select('id', 'name', 'slug', 'excerpt', 'created_at', 'updated_at', 'is_public', 'user_id', 'journal_id')
             ->with(['user' => function ($query) {
