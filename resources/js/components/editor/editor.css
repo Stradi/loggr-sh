@@ -23,7 +23,7 @@
 }
 
 .ProseMirror {
-  @apply prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5;
+  @apply prose prose-sm prose-p:text-base prose-p:text-neutral-900 max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5;
   @apply px-4 py-2 rounded-xl ring-1 ring-neutral-300 ring-offset-0;
   @apply transition-[box-shadow] duration-150 text-neutral-800;
   @apply hover:ring-neutral-600;

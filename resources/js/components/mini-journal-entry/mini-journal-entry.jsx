@@ -1,8 +1,8 @@
-import { Link } from "@inertiajs/react";
+import {Link} from "@inertiajs/react";
 import AuthorInfo from "../author-info.jsx";
 import JournalEntryStats from "../single-journal-entry/journal-entry-stats";
 
-export default function MiniJournalEntry({ journalEntry }) {
+export default function MiniJournalEntry({journalEntry}) {
   return (
     <Link
       href={route("journal_entry.show", {
@@ -12,7 +12,8 @@ export default function MiniJournalEntry({ journalEntry }) {
       className="group/entry cursor-pointer"
       as={"article"}
     >
-      <article className="p-4 border-b border-neutral-300 group-hover/entry:bg-neutral-50 transition-[background-color] duration-150">
+      <article
+        className="p-4 border-b border-neutral-300 group-hover/entry:bg-neutral-50 transition-[background-color] duration-150">
         <header>
           <AuthorInfo
             name={journalEntry.user.name}
@@ -21,7 +22,8 @@ export default function MiniJournalEntry({ journalEntry }) {
             created_at={journalEntry.created_at}
           />
         </header>
-        <main className="flex flex-col gap-2 prose prose-sm prose-p:text-lg max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">
+        <main
+          className="flex flex-col gap-2 text-sm prose prose-sm prose-p:text-base prose-p:text-neutral-900 max-w-none prose-headings:mb-1 prose-headings:mt-3 prose-p:mb-0 prose-p:mt-1.5">
           <span className="text-2xl font-semibold text-black">
             {journalEntry.name}
           </span>
@@ -39,7 +41,7 @@ export default function MiniJournalEntry({ journalEntry }) {
               __html: journalEntry.excerpt,
             }}
           />
-          <JournalEntryStats journalEntry={journalEntry} />
+          <JournalEntryStats journalEntry={journalEntry}/>
         </main>
       </article>
     </Link>
