@@ -6,7 +6,7 @@ export default function AuthorInfo({name, handle, avatar, created_at}) {
     <div className="flex gap-2 items-center">
       <Link href={`/@${handle}`} className="group">
         <img
-          className="h-12 rounded-full group-hover:brightness-95"
+          className="h-10 rounded-full group-hover:brightness-95"
           src={avatar}
         />
       </Link>
@@ -22,9 +22,15 @@ export default function AuthorInfo({name, handle, avatar, created_at}) {
             </span>
           </Link>
         </div>
-        <time className="text-neutral-500" dateTime={created_at}>
-          {relativeDate(new Date(created_at))}
-        </time>
+        {
+          created_at ? (
+            <time className="text-neutral-500" dateTime={created_at}>
+              {relativeDate(new Date(created_at))}
+            </time>
+          ) : (
+            <div>&nbsp;</div>
+          )
+        }
       </div>
     </div>
   );

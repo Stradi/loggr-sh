@@ -1,10 +1,9 @@
-import { router } from "@inertiajs/react";
-import clsx from "clsx";
-import { useState } from "react";
-import { ChatBubbleIcon, HeartIcon } from "../icons";
+import {router} from "@inertiajs/react";
+import {useState} from "react";
+import LikeButton from "@/components/atoms/like-button.jsx";
+import CommentButton from "@/components/atoms/comment-button.jsx";
 
-export default function JournalEntryStats({ journalEntry }) {
-  const [liked, setLiked] = useState(journalEntry.has_liked);
+export default function JournalEntryStats({journalEntry}) {
   const [hasCommented, setHasCommented] = useState(false);
 
   function likeEntry() {
@@ -17,9 +16,6 @@ export default function JournalEntryStats({ journalEntry }) {
       {
         preserveScroll: true,
         preserveState: true,
-        onSuccess: () => {
-          setLiked(true);
-        },
       }
     );
   }
@@ -34,68 +30,23 @@ export default function JournalEntryStats({ journalEntry }) {
       {
         preserveScroll: true,
         preserveState: true,
-        onSuccess: () => {
-          setLiked(false);
-        },
       }
     );
   }
 
   return (
     <div className="flex gap-2">
-      <button
-        className="flex gap-2 hover:bg-red-500/10 p-2 rounded-xl group"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-
-          if (liked) {
-            setLiked(false);
-            unlikeEntry();
-          } else {
-            setLiked(true);
-            likeEntry();
-          }
+      <LikeButton
+        count={journalEntry.likers_count}
+        defaultValue={journalEntry.has_liked}
+        onLike={likeEntry}
+        onUnlike={unlikeEntry}
+      />
+      <CommentButton
+        count={journalEntry.comments_count || 0}
+        onClick={() => {
         }}
-      >
-        <HeartIcon
-          svgClassName={clsx(
-            "text-neutral-500 group-hover:text-red-500",
-            liked && "fill-red-500 text-red-500"
-          )}
-        />
-        <span
-          className={clsx(
-            "text-sm font-medium text-neutral-500 group-hover:text-red-500",
-            liked && "text-red-500"
-          )}
-        >
-          {journalEntry.likers_count}
-        </span>
-      </button>
-      <button
-        className="flex gap-2 hover:bg-sky-500/10 p-2 rounded-xl group"
-        onClick={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          setHasCommented(!hasCommented);
-        }}
-      >
-        <ChatBubbleIcon
-          svgClassName={clsx(
-            "text-neutral-500 group-hover:text-sky-500",
-            hasCommented && "fill-sky-500 text-sky-500"
-          )}
-        />
-        <span
-          className={clsx(
-            "text-sm font-medium text-neutral-500 group-hover:text-sky-500",
-            hasCommented && "text-sky-500"
-          )}
-        >
-          {/* {journalEntry.comment_count} */} 21
-        </span>
-      </button>
+      />
     </div>
   );
 }

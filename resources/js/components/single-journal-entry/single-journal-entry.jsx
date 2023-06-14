@@ -1,5 +1,6 @@
 import AuthorInfo from "../author-info.jsx";
 import JournalEntryStats from "./journal-entry-stats";
+import JournalEntryComments from "@/components/single-journal-entry/journal-entry-comments.jsx";
 
 export default function SingleJournalEntry({journalEntry}) {
   return (
@@ -34,9 +35,7 @@ export default function SingleJournalEntry({journalEntry}) {
         />
       </section>
       <section>
-        <div className="p-4">
-          <h2 className="text-lg font-medium">Replies (64)</h2>
-        </div>
+        <JournalEntryComments journalEntry={journalEntry}/>
       </section>
     </article>
   );

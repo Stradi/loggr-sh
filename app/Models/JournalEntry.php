@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Overtrue\LaravelLike\Traits\Likeable;
 
 class JournalEntry extends Model
 {
-    use HasFactory, Likeable;
+    use Likeable;
 
     protected $fillable = [
         'name',
@@ -32,6 +32,11 @@ class JournalEntry extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
     }
 
     public function getRouteKeyName(): string

@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export default function Textarea({ className, disabled, ...props }) {
+export default function Textarea({className, disabled, autogrow, ...props}) {
   return (
     <textarea
       {...props}
@@ -10,9 +10,16 @@ export default function Textarea({ className, disabled, ...props }) {
         "hover:ring-neutral-600",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-neutral-600",
         disabled &&
-          "opacity-75 cursor-not-allowed ring-neutral-200 hover:ring-neutral-200 text-neutral-500",
+        "opacity-75 cursor-not-allowed ring-neutral-200 hover:ring-neutral-200 text-neutral-500",
+        autogrow && "resize-none overflow-hidden min-h-[3rem] max-h-[12rem]",
         className
       )}
+      onInput={e => {
+        if (autogrow) {
+          e.target.style.height = "auto";
+          e.target.style.height = e.target.scrollHeight + "px";
+        }
+      }}
       disabled={disabled}
     />
   );

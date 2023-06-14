@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,13 @@ Route::post('/upload-to-s3', function (Request $request) {
         "url" => $uploaded_file
     ]);
 });
+
+Route::post('/comment', [CommentController::class, "store"])
+    ->name("comment.store")
+    ->middleware(['auth', 'verified']);
+
+Route::get('/comment/{comment}/replies', [CommentController::class, "replies"])
+    ->name("comment.replies");
 
 require __DIR__ . '/auth.php';
 require __DIR__ . '/profile.php';
