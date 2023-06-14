@@ -5,7 +5,6 @@ import CommentButton from "@/components/atoms/comment-button.jsx";
 
 export default function JournalEntryStats({journalEntry}) {
   const [hasCommented, setHasCommented] = useState(false);
-
   function likeEntry() {
     router.post(
       route("social.like_journal_entry", {
@@ -44,8 +43,6 @@ export default function JournalEntryStats({journalEntry}) {
       />
       <CommentButton
         count={journalEntry.comments_count || 0}
-        onClick={() => {
-        }}
       />
     </div>
   );

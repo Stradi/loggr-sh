@@ -25,7 +25,8 @@ class JournalController extends Controller
                 'description' => $journal->description,
                 'user' => $journal->user()->get()[0],
                 'entries_count' => $journal->entries()->count(),
-                'entries' => $journal->entries()->with('user')->withCount('likers')
+                'entries' => $journal->entries()
+                    ->with(['user'])->withCount(['likers', 'comments'])
                     ->where('is_public', true)
                     ->orWhere('user_id', auth()->id())
                     ->paginate(12)->through(
@@ -44,6 +45,7 @@ class JournalController extends Controller
                                     'avatar' => $entry->user->avatar,
                                 ],
                                 'likers_count' => $entry->likers_count,
+                                'comments_count' => $entry->comments_count,
                                 'has_liked' => auth()->user() ? auth()->user()->hasLiked($entry) : false,
                             ];
                         }

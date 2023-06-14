@@ -117,7 +117,7 @@ class ProfileController extends Controller
             }, 'journal' => function ($query) {
                 $query->select('id', 'slug');
             }])
-            ->withCount('likers')
+            ->withCount(['likers', 'comments'])
             ->paginate(12)
             ->through(function ($entry) {
                 return [
@@ -129,6 +129,7 @@ class ProfileController extends Controller
                     'updated_at' => $entry->updated_at,
                     'is_public' => $entry->is_public,
                     'likers_count' => $entry->likers_count,
+                    'comments_count' => $entry->comments_count,
                     'has_liked' => auth()->user() ? auth()->user()->hasLiked($entry) : false,
                     'user' => [
                         'id' => $entry->user->id,

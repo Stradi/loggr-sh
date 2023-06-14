@@ -12,7 +12,7 @@ class JournalEntryController extends Controller
 {
     public function show(Request $request, Journal $journal, JournalEntry $journalEntry)
     {
-        $journalEntry = $journalEntry->load(['user', 'journal'])->loadCount('likers');
+        $journalEntry = $journalEntry->load(['user', 'journal'])->loadCount('likers', 'comments');
         $has_liked = $request->user() ? $journalEntry->isLikedBy($request->user()) : false;
         $comments = $journalEntry
             ->comments()
