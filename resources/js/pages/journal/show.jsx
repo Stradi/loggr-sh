@@ -6,7 +6,7 @@ import AppLayout from "@/layouts/app-layout";
 import DeleteJournalButton from "./delete-journal-button";
 import EditJournalDialog from "./edit-journal-dialog";
 
-export default function Page({ auth, journal, social }) {
+export default function Page({auth, journal, social}) {
   return (
     <AppLayout auth={auth}>
       <section className="max-w-3xl divide-y divide-neutral-300 border-r border-neutral-300">
@@ -14,7 +14,7 @@ export default function Page({ auth, journal, social }) {
           <h1 className="font-medium text-3xl">{journal.name}</h1>
           <p className="text-lg">{journal.description}</p>
           <div className="text-left max-w-[256px] w-max mx-auto block">
-            <MiniProfileButton user={journal.user} />
+            <MiniProfileButton user={journal.user}/>
           </div>
           <div className="flex gap-4 justify-center">
             <SocialDialog
@@ -37,7 +37,7 @@ export default function Page({ auth, journal, social }) {
               resetItemsOnClose
             />
             <p>
-              <span className="font-medium">{journal.entries.length}</span>{" "}
+              <span className="font-medium">{journal.entries_count}</span>{" "}
               Entries
             </p>
           </div>
@@ -51,7 +51,7 @@ export default function Page({ auth, journal, social }) {
                     description: journal.description,
                   }}
                 />
-                <DeleteJournalButton slug={journal.slug} />
+                <DeleteJournalButton slug={journal.slug}/>
               </>
             ) : (
               <FollowButton

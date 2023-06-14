@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Journal;
-use App\Models\JournalEntry;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -26,6 +24,7 @@ class JournalController extends Controller
                 'slug' => $journal->slug,
                 'description' => $journal->description,
                 'user' => $journal->user()->get()[0],
+                'entries_count' => $journal->entries()->count(),
                 'entries' => $journal->entries()->with('user')->withCount('likers')
                     ->where('is_public', true)
                     ->orWhere('user_id', auth()->id())
