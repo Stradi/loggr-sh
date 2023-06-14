@@ -5,42 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Journal;
 use App\Models\JournalEntry;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Intervention\Image\Image;
+use Inertia\Response;
 
 class ProfileController extends Controller
 {
     /**
-     * Uploads a file to S3 and returns the URL.
-     * @param \Illuminate\Http\UploadedFile $file The file to upload.
-     * @param string $path The path to upload the file to.
-     * @param array<int, int> $dimensions The dimensions to resize the image to.
-     * @return string The URL of the uploaded file.
-     */
-    private function _upload_file_to_s3($file, $path, $dimensions)
-    {
-        $uuid = Str::orderedUuid();
-        $extension = $file->getClientOriginalExtension();
-        $full_filename = $uuid . '.' . $extension;
-
-        $image = Image::make($file);
-        $image->fit($dimensions[0], $dimensions[1]);
-        $resource = $image->stream()->detach();
-
-        Storage::disk('s3')->put($path . '/' . $full_filename, $resource);
-
-        return Env::get('AWS_URL') . '/' . $path . '/' . $full_filename;
-    }
-
-    /**
      * Show a user's profile by their handle.
-     * @param \Illuminate\Http\Request $request The request object.
+     * @param Request $request The request object.
      * @param string $handle The user's handle. This is the @username.
-     * @return \Inertia\Response
+     * @return Response
      */
     public function show(Request $request, string $handle)
     {
@@ -83,8 +60,8 @@ class ProfileController extends Controller
 
     /**
      * Update a user's profile. This is the POST route.
-     * @param \Illuminate\Http\Request $request The request object.
-     * @return \Illuminate\Http\RedirectResponse
+     * @param Request $request The request object.
+     * @return RedirectResponse
      */
     public function update(Request $request)
     {
@@ -102,7 +79,7 @@ class ProfileController extends Controller
         // TODO: Optionally, we can create multiple sizes of the image by
         //       adding a queue job here. But we probably don't want this.
         if ($request->hasFile('avatar')) {
-            $uploaded_file = $this->_upload_file_to_s3($request->file('avatar'), 'avatars', [400, 400]);
+            $uploaded_file = upload_file_to_s3($request->file('avatar'), 'avatars', [400, 400]);
 
             if ($user->avatar) {
                 $filename = basename($user->avatar);
@@ -113,7 +90,7 @@ class ProfileController extends Controller
         }
 
         if ($request->hasFile('cover_image')) {
-            $uploaded_file = $this->_upload_file_to_s3($request->file('cover_image'), 'cover_images', [1500, 500]);
+            $uploaded_file = upload_file_to_s3($request->file('cover_image'), 'cover_images', [1500, 500]);
 
             if ($user->cover_image) {
                 $filename = basename($user->cover_image);
