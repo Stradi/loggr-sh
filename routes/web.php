@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FeedController;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +23,16 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
+Route::get('/feed', [FeedController::class, 'feed'])
+    ->middleware(['auth'])
+    ->name('feed');
+
+Route::get('/news', [FeedController::class, 'news'])
+    ->name('news');
+
+Route::get('/news/entries', [FeedController::class, 'newsEntries'])
+    ->name('news.entries');
 
 Route::post('/upload-to-s3', function (Request $request) {
     $request->validate([
